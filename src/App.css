@@ -6,7 +6,6 @@
   grid-template-areas:
     "sidebar header"
     "sidebar main";
-    background: cyan;
 }
 
 .sidebar {

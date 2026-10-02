@@ -9,9 +9,9 @@ const Header = () => {
   const [isDark, setIsDark] = React.useState(false);
 
   return (
-    <div className="flex items-center justify-between px-8 h-17.5">
+    <div className="flex items-center justify-between px-8 h-17.5 bg-secondary border-b border-primary/10">
       {/* Search Input Box */}
-      <div className="flex items-center gap-3 w-80 rounded-full bg-secondary/40 px-4 py-2.5 border border-primary/20 focus-within:border-primary focus-within:bg-secondary/70 transition-all duration-200">
+      <div className="flex items-center gap-3 w-80 rounded-full bg-surface px-4 py-2.5 border border-transparent focus-within:border-primary transition-all duration-200">
         <FaMagnifyingGlass size={18} className="text-primary/60" />
 
         <input
@@ -21,24 +21,24 @@ const Header = () => {
         />
       </div>
 
-      {/* Bell Icon Container */}
+      {/* Right Side */}
       <div className="flex items-center gap-3">
-        <div className="relative inline-flex items-center justify-center cursor-pointer p-2.5 rounded-full hover:bg-secondary/60 text-primary/80 hover:text-primary transition-all duration-200">
-          {/* Bell Icon */}
+        <div className="relative inline-flex items-center justify-center cursor-pointer p-2.5 rounded-full hover:bg-surface text-primary/80 hover:text-primary transition-all duration-200">
           <FaRegBell size={24} />
           <GoDotFill
             size={15}
-            className="text-red-500 absolute top-1.5 right-1.5 animate-pulse"
+            className="text-accent absolute top-1.5 right-1.5 animate-pulse"
           />
         </div>
-        <div className="rounded-xl px-2 py-1 gap-3 w-auto h-auto flex items-center justify-between">
+
+        <div className="rounded-xl px-2 py-1 gap-3 w-auto h-auto flex items-center justify-between border-l border-primary/10 pl-4">
           <img
             src="https://avatars.githubusercontent.com/u/161487398?v=4"
-            className="w-10 h-10 rounded-full"
+            className="w-10 h-10 rounded-full ring-2 ring-surface"
             alt="Usman Ghani"
           />
           <div className="flex flex-col leading-none">
-            <p className="text-sm text-primary/80">Usman Ghani</p>
+            <p className="text-sm font-medium text-primary">Usman Ghani</p>
             <p className="text-xs text-primary/60">Administrator</p>
           </div>
         </div>
@@ -47,7 +47,7 @@ const Header = () => {
         <div
           onClick={() => setIsDark(!isDark)}
           className={`relative w-16 h-8 rounded-full p-1 cursor-pointer transition-colors duration-300 flex items-center ${
-            isDark ? "bg-primary" : "bg-secondary border border-primary/20"
+            isDark ? "bg-primary" : "bg-surface"
           }`}
         >
           <div className="absolute inset-0 flex items-center justify-between px-2 text-xs select-none">
@@ -61,7 +61,6 @@ const Header = () => {
             />
           </div>
 
-          {/* Sliding Knob with Active Icon */}
           <div
             className={`relative z-10 w-6 h-6 rounded-full flex items-center justify-center shadow-md transform transition-all duration-300 ease-in-out ${
               isDark
@@ -69,20 +68,13 @@ const Header = () => {
                 : "translate-x-0 bg-primary text-secondary"
             }`}
           >
-            {isDark ? (
-              <FiMoon
-                size={13}
-                className="transition-transform duration-300 rotate-0"
-              />
-            ) : (
-              <FiSun
-                size={13}
-                className="transition-transform duration-300 rotate-0"
-              />
-            )}
+            {isDark ? <FiMoon size={13} /> : <FiSun size={13} />}
           </div>
         </div>
-        <div className="cursor-pointer">{<FaGear size={21} className="text-primary/80" />}</div>
+
+        <button className="cursor-pointer p-2 rounded-full hover:bg-surface transition-colors duration-200">
+          <FaGear size={21} className="text-primary/80" />
+        </button>
       </div>
     </div>
   );

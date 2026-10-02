@@ -8,10 +8,10 @@ import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
   return (
-    <div className="flex flex-col items-start gap-8 py-6 bg-secondary min-h-screen">
-      <h1 className="text-2xl font-bold text-primary px-7 leading-none">
+    <div className="flex flex-col items-start gap-8 py-6 bg-primary min-h-screen">
+      <h1 className="text-2xl font-bold text-secondary px-7 leading-none">
         OpsHub <br />
-        <span className="text-primary text-sm font-normal opacity-60">Operation Dashboard</span>
+        <span className="text-secondary text-sm font-normal opacity-60">Operation Dashboard</span>
       </h1>
       <div className="flex flex-col gap-1 px-4 w-60">
         <NavLink
@@ -19,7 +19,7 @@ const SideBar = () => {
           end
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-primary text-secondary font-medium" : "text-primary hover:bg-primary/10"
+              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
             }`
           }
         >
@@ -31,7 +31,7 @@ const SideBar = () => {
           to="/users"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-primary text-secondary font-medium" : "text-primary hover:bg-primary/10"
+              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
             }`
           }
         >
@@ -43,7 +43,7 @@ const SideBar = () => {
           to="/products"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-primary text-secondary font-medium" : "text-primary hover:bg-primary/10"
+              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
             }`
           }
         >
@@ -55,7 +55,7 @@ const SideBar = () => {
           to="/orders"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-primary text-secondary font-medium" : "text-primary hover:bg-primary/10"
+              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
             }`
           }
         >
@@ -67,7 +67,7 @@ const SideBar = () => {
           to="/activity"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-primary text-secondary font-medium" : "text-primary hover:bg-primary/10"
+              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
             }`
           }
         >
@@ -79,7 +79,7 @@ const SideBar = () => {
           to="/settings"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-primary text-secondary font-medium" : "text-primary hover:bg-primary/10"
+              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
             }`
           }
         >

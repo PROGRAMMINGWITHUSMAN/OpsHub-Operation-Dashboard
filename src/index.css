@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #064e3b;
-    --color-secondary: #f8e7c9;
+  /* Existing */
+  --color-primary: #064e3b; /* dark green - sidebar active, headings */
+  --color-secondary: #f8e7c9; /* cream - main background */
+
+  /* New: surface levels (for layering) */
+  --color-surface: #fffaf0; /* slightly lighter than secondary - topbar, cards */
+  --color-surface-muted: #f1e3c6; /* slightly darker than secondary - borders, dividers */
+
+  /* New: text hierarchy */
+  --color-text-primary: #1a2e26; /* near-black green for main text */
+  --color-text-muted: #6b7d74; /* muted green-grey for subtitles/placeholders */
+
+  /* New: accents */
+  --color-accent: #b45309; /* warm amber/orange - notifications, highlights */
+  --color-success: #15803d; /* for positive stats */
+  --color-danger: #b91c1c; /* for delete/errors, warmer red that fits palette */
 }
+
