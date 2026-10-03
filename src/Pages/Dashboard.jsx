@@ -8,8 +8,84 @@ import { FaRegClock } from "react-icons/fa";
 import Chart from "../Components/Dashboard/Chart";
 import RecentOrders from "../Components/Dashboard/RecentOrders";
 import RecentActivity from "../Components/Dashboard/RecentActivity";
+import { USER_API_URL, PRODUCT_API_URL, ORDER_API_URL } from "../Services/API";
+import { useCustomQuery } from "../Hooks/useCustomQuery";
 
 const Dashboard = () => {
+  const {
+    data: usersData,
+    isPending: isUsersPending,
+    isError: isUsersError,
+    error: usersError,
+  } = useCustomQuery("users", USER_API_URL);
+
+  const {
+    data: productsData,
+    isPending: isProductsPending,
+    isError: isProductsError,
+    error: productsError,
+  } = useCustomQuery("products", PRODUCT_API_URL);
+
+  const {
+    data: ordersData,
+    isPending: isOrdersPending,
+    isError: isOrdersError,
+    error: ordersError,
+  } = useCustomQuery("orders", ORDER_API_URL);
+
+  // console.log(usersData);
+  // console.log(productsData);
+  console.log(ordersData);
+
+  let users = usersData
+    ? usersData.users.map((user) => {
+        return {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          email: user.email,
+          phone: user.phone,
+          address: user.address,
+          company: user.company,
+        };
+      })
+    : [];
+
+  let products = productsData
+    ? productsData.products.map((product) => {
+        return {
+          id: product.id,
+          title: product.title,
+          description: product.description,
+          category: product.category,
+          price: product.price,
+          rating: product.rating,
+          stock: product.stock,
+          image: product.image,
+        };
+      })
+    : [];
+
+  let status = ["Pending", "Delivered", "Cancelled", "Processing"];
+
+  let orders = ordersData
+    ? ordersData.carts.map((order, idx) => {
+        return {
+          uniqueId: order.id,
+          productId: `#${order.products[0].id}`,
+          customer: users[idx].firstName + " " + users[idx].lastName,
+          items: order.products[0].title,
+          amount: order.products[0].total,
+          status: status[Math.floor(Math.random() * status.length)],
+          date: order.date,
+        };
+      })
+    : [];
+
+    
+
+  console.log(orders);
+
   const [selectedRange, setSelectedRange] = useState("last7days");
 
   const dateOptions = [
@@ -23,7 +99,6 @@ const Dashboard = () => {
 
   return (
     <div className="px-6 py-6 bg-secondary flex flex-col gap-6">
-
       {/* Top Bar */}
       <div className="flex justify-between">
         <div>
@@ -56,12 +131,28 @@ const Dashboard = () => {
 
       {/* Stats */}
       <div className="flex justify-between flex-wrap">
-        <Stat icon={<BsFillPeopleFill size={55} className="text-primary" />} title="Total Users" value="1,248" />
-        <Stat icon={<BsFillBoxSeamFill size={55} className="text-primary" />} title="Total Products" value="892" />
-        <Stat icon={<FaShoppingCart size={55} className="text-primary" />} title="Total Orders" value="2,341" />
-        <Stat icon={<FaRegClock size={55} className="text-primary" />} title="Pending Orders" value="142" />
+        <Stat
+          icon={<BsFillPeopleFill size={55} className="text-primary" />}
+          title="Total Users"
+          value="1,248"
+        />
+        <Stat
+          icon={<BsFillBoxSeamFill size={55} className="text-primary" />}
+          title="Total Products"
+          value="892"
+        />
+        <Stat
+          icon={<FaShoppingCart size={55} className="text-primary" />}
+          title="Total Orders"
+          value="2,341"
+        />
+        <Stat
+          icon={<FaRegClock size={55} className="text-primary" />}
+          title="Pending Orders"
+          value="142"
+        />
       </div>
-      
+
       {/* Dashboard Chart and Recent Activity */}
       <div className="flex justify-between">
         <Chart />
@@ -74,6 +165,6 @@ const Dashboard = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;
