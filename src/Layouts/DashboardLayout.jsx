@@ -4,16 +4,16 @@ import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
   return (
-    <div className="dashboard">
-      <div className="sidebar">
+    <div className="dashboard h-screen">
+      <div className="sidebar overflow-hidden">
         <SideBar />
       </div>
 
-      <div className="header">
+      <div className="header overflow-hidden">
         <Header />
       </div>
 
-      <main className="main"><Outlet /></main>
+      <main className="main overflow-y-auto"><Outlet /></main>
     </div>
   );
 };
