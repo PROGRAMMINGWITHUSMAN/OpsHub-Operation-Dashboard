@@ -10,6 +10,8 @@ import RecentOrders from "../Components/Dashboard/RecentOrders";
 import RecentActivity from "../Components/Dashboard/RecentActivity";
 import { USER_API_URL, PRODUCT_API_URL, ORDER_API_URL } from "../Services/API";
 import { useCustomQuery } from "../Hooks/useCustomQuery";
+import dates from "../Data/date";
+import activity from "../Data/activity";
 
 const Dashboard = () => {
   const {
@@ -35,7 +37,7 @@ const Dashboard = () => {
 
   // console.log(usersData);
   // console.log(productsData);
-  console.log(ordersData);
+  // console.log(ordersData);
 
   let users = usersData
     ? usersData.users.map((user) => {
@@ -75,14 +77,18 @@ const Dashboard = () => {
           productId: `#${order.products[0].id}`,
           customer: users[idx].firstName + " " + users[idx].lastName,
           items: order.products[0].title,
-          amount: order.products[0].total,
+          amount: Number(order.products[0].total).toFixed(2),
           status: status[Math.floor(Math.random() * status.length)],
-          date: order.date,
+          date: dates[idx]
+            ? new Date(dates[idx]).toLocaleString("en-PK", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })
+            : "N/A",
         };
       })
     : [];
-
-    
 
   console.log(orders);
 
