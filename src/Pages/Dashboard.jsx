@@ -12,6 +12,7 @@ import { USER_API_URL, PRODUCT_API_URL, ORDER_API_URL } from "../Services/API";
 import { useCustomQuery } from "../Hooks/useCustomQuery";
 import dates from "../Data/date";
 import activity from "../Data/activity";
+import statuses from "../Data/status";
 
 const Dashboard = () => {
   const {
@@ -35,13 +36,10 @@ const Dashboard = () => {
     error: ordersError,
   } = useCustomQuery("orders", ORDER_API_URL);
 
-  // console.log(usersData);
-  // console.log(productsData);
-  // console.log(ordersData);
-
   let users = usersData
     ? usersData.users.map((user) => {
         return {
+          id: user.id,
           firstName: user.firstName,
           lastName: user.lastName,
           username: user.username,
@@ -68,17 +66,21 @@ const Dashboard = () => {
       })
     : [];
 
-  let status = ["Pending", "Delivered", "Cancelled", "Processing"];
+  // console.log(productsData);
 
   let orders = ordersData
     ? ordersData.carts.map((order, idx) => {
+        let customer = users.find((user) => user.id === order.id);
+
         return {
           uniqueId: order.id,
           productId: `#${order.products[0].id}`,
-          customer: users[idx].firstName + " " + users[idx].lastName,
+          customer: customer
+            ? customer.firstName + " " + customer.lastName
+            : "Unknown",
           items: order.products[0].title,
           amount: Number(order.products[0].total).toFixed(2),
-          status: status[Math.floor(Math.random() * status.length)],
+          status: statuses[idx] ? statuses[idx] : "Pending",
           date: dates[idx]
             ? new Date(dates[idx]).toLocaleString("en-PK", {
                 day: "2-digit",
@@ -90,7 +92,40 @@ const Dashboard = () => {
       })
     : [];
 
-  console.log(orders);
+  let sales = ordersData
+    ? ordersData.carts.map((order, idx) => {
+        const salesArr = order.products.map((product) => Number(product.total));
+        const salesTotal = Number(
+          salesArr.reduce((acc, curr) => acc + curr, 0).toFixed(2),
+        );
+
+        return {
+          sales: salesTotal,
+          date: orders[idx].date,
+        };
+      })
+    : [];
+
+  const dailySales = sales.reduce((acc, current) => {
+    const existingDate = acc.find((item) => item.date === current.date);
+
+    if (existingDate) {
+      Number(Number(existingDate.sales) + Number(current.sales)).toFixed(2);
+    } else {
+      acc.push({
+        date: current.date,
+        sales: Number(current.sales.toFixed(2)),
+      });
+    }
+
+    return acc;
+  }, []);
+
+  const activitiesSlice = activity.slice(0, 6);
+
+  const ordersSlice = orders.slice(0, 5);
+
+  const pendingOrders = orders.filter((order) => order.status === "Pending");
 
   const [selectedRange, setSelectedRange] = useState("last7days");
 
@@ -100,7 +135,6 @@ const Dashboard = () => {
     { label: "Last 7 Days", value: "last7days" },
     { label: "Last 30 Days", value: "last30days" },
     { label: "This Month", value: "thisMonth" },
-    { label: "Custom Range", value: "custom" },
   ];
 
   return (
@@ -114,7 +148,7 @@ const Dashboard = () => {
             Today.
           </p>
         </div>
-        <div className="flex items-center gap-2 rounded-xl border border-primary/10 px-3.5 py-2.5 shadow-sm">
+        {/* <div className="flex items-center gap-2 rounded-xl border border-primary/10 px-3.5 py-2.5 shadow-sm">
           <span className="text-primary/50">
             <FaCalendarAlt />
           </span>
@@ -132,7 +166,7 @@ const Dashboard = () => {
               </option>
             ))}
           </select>
-        </div>
+        </div> */}
       </div>
 
       {/* Stats */}
@@ -140,34 +174,34 @@ const Dashboard = () => {
         <Stat
           icon={<BsFillPeopleFill size={55} className="text-primary" />}
           title="Total Users"
-          value="1,248"
+          value={isUsersPending ? "Loading..." : users.length}
         />
         <Stat
           icon={<BsFillBoxSeamFill size={55} className="text-primary" />}
           title="Total Products"
-          value="892"
+          value={isProductsPending ? "Loading..." : products.length}
         />
         <Stat
           icon={<FaShoppingCart size={55} className="text-primary" />}
           title="Total Orders"
-          value="2,341"
+          value={isOrdersPending ? "Loading..." : orders.length}
         />
         <Stat
           icon={<FaRegClock size={55} className="text-primary" />}
           title="Pending Orders"
-          value="142"
+          value={isOrdersPending ? "Loading..." : pendingOrders.length}
         />
       </div>
 
       {/* Dashboard Chart and Recent Activity */}
-      <div className="flex justify-between">
-        <Chart />
-        <RecentActivity />
+      <div className="flex w-full gap-4 justify-between">
+        <Chart dailySales={dailySales} />
+        <RecentActivity activities={activitiesSlice} />
       </div>
 
       {/* Recent Orders */}
       <div>
-        <RecentOrders />
+        <RecentOrders orders={ordersSlice} />
       </div>
     </div>
   );

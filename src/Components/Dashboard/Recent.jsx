@@ -4,14 +4,26 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { BsFillBoxSeamFill } from "react-icons/bs";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaGear } from "react-icons/fa6";
+import { IoNotifications } from "react-icons/io5";
+import { FaLock } from "react-icons/fa";
+import { MdAnalytics } from "react-icons/md";
+import { MdReviews } from "react-icons/md";
+import { FaWallet } from "react-icons/fa6";
 
-const Recent = ( { about, title, time, subtitle } ) => {
+const Recent = ( { title, subtitle, time, about} ) => {
+
+  // console.log(time)
 
     const icon = {
         people: <BsFillPeopleFill size={20} />,
         cart: <FaShoppingCart size={20} />,
         product: <BsFillBoxSeamFill size={20} />,
-        settings: <FaGear size={20} />
+        settings: <FaGear size={20} />,
+        notification: <IoNotifications size={20} />,
+        wallet: <FaWallet size={20} />,
+        analytics: <MdAnalytics size={20} />,
+        review: <MdReviews size={20} />,
+        security: <FaLock size={20} />
     }
 
   return (
@@ -21,7 +33,7 @@ const Recent = ( { about, title, time, subtitle } ) => {
           {icon[about]}
         </div>
         <div className="flex flex-col text-sm">
-          <p className="font-bold">{title}</p>
+          <p className="font-bold capitalize">{title}</p>
           <p className="text-text-muted">{subtitle}</p>
         </div>
       </div>

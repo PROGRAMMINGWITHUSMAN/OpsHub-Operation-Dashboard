@@ -6,17 +6,10 @@ const statusStyles = {
   Completed: "bg-success/10 text-success",
   Cancelled: "bg-danger/10 text-danger",
   Pending: "bg-accent/10 text-accent",
+  Delivered: "bg-success/10 text-success",
 };
 
-const orders = [
-  { id: "123456", customer: "John Doe", product: "Wireless Mouse", amount: "$100", status: "Pending", date: "2026-01-01" },
-  { id: "123457", customer: "Sara Malik", product: "Keyboard", amount: "$75", status: "Delivered", date: "2026-01-02" },
-  { id: "123458", customer: "Hamza Ali", product: "Laptop Stand", amount: "$40", status: "Cancelled", date: "2026-01-03" },
-  { id: "123459", customer: "Sara Malik", product: "Keyboard", amount: "$75", status: "Completed", date: "2026-01-04" },
-  { id: "123460", customer: "Hamza Ali", product: "Laptop Stand", amount: "$40", status: "Pending", date: "2026-01-05" },
-];
-
-const RecentOrders = () => {
+const RecentOrders = ({ orders }) => {
   return (
     <div className="flex flex-col w-full bg-surface rounded-2xl p-5 shadow-sm">
       <div className="flex items-center justify-between w-full mb-4.5">
@@ -44,11 +37,11 @@ const RecentOrders = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-surface-muted overflow-y-auto">
-            {orders.map((o) => (
-              <tr key={o.id} className="hover:bg-secondary/40 transition-colors duration-150">
-                <td className="py-3 pr-4 font-medium text-text-primary">#{o.id}</td>
+            {orders.map((o, idx) => (
+              <tr key={idx} className="hover:bg-secondary/40 transition-colors duration-150">
+                <td className="py-3 pr-4 font-medium text-text-primary">{o.productId}</td>
                 <td className="py-3 pr-4 text-text-primary">{o.customer}</td>
-                <td className="py-3 pr-4 text-text-muted">{o.product}</td>
+                <td className="py-3 pr-4 text-text-muted">{o.items}</td>
                 <td className="py-3 pr-4 text-text-primary">{o.amount}</td>
                 <td className="py-3 pr-4">
                   <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${statusStyles[o.status]}`}>
