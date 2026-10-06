@@ -13,7 +13,7 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 const DAY = 86400000;
 
 const Chart = ({ dailySales = [] }) => {
-  const [range, setRange] = useState("7d");
+  const [range, setRange] = useState("30d");
 
   const filtered = useMemo(() => {
     if (!dailySales.length) return [];
