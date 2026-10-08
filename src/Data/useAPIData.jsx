@@ -2,10 +2,10 @@ import { USER_API_URL, PRODUCT_API_URL, ORDER_API_URL } from "../Services/API";
 import { useCustomQuery } from "../Hooks/useCustomQuery";
 import dates from "../Data/date";
 import statuses from "../Data/status";
+import userStatus from "../Data/userStatus";
+import productStatus from "../Data/productStatus";
 
 const useAPIData = () => {
-  const status = ["Active", "InActive"];
-
   const {
     data: usersData,
     isPending: isUsersPending,
@@ -39,15 +39,13 @@ const useAPIData = () => {
           phone: user.phone,
           address: user.address,
           company: user.company,
-          status: status[Math.floor(Math.random() * 2)],
+          status: userStatus[user.id],
         };
       })
     : [];
 
-  // console.log(usersData)
-
   let products = productsData
-    ? productsData.products.map((product) => {
+    ? productsData.products.map((product, idx) => {
         return {
           id: product.id,
           title: product.title,
@@ -56,7 +54,8 @@ const useAPIData = () => {
           price: product.price,
           rating: product.rating,
           stock: product.stock,
-          image: product.image,
+          image: product.images[0],
+          status: productStatus[idx] ? productStatus[idx] : "In Stock",
         };
       })
     : [];

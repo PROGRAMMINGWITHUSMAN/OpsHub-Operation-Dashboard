@@ -7,11 +7,7 @@ import { FaRegClock } from "react-icons/fa";
 import Chart from "../Components/Dashboard/Chart";
 import RecentOrders from "../Components/Dashboard/RecentOrders";
 import RecentActivity from "../Components/Dashboard/RecentActivity";
-// import { USER_API_URL, PRODUCT_API_URL, ORDER_API_URL } from "../Services/API";
-// import { useCustomQuery } from "../Hooks/useCustomQuery";
-// import dates from "../Data/date";
 import activity from "../Data/activity";
-// import statuses from "../Data/status";
 import TopBar from "../Components/Dashboard/TopBar";
 import useAPIData from "../Data/useAPIData.jsx";
 

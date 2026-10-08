@@ -1,4 +1,3 @@
-import React from "react";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FiPlus } from "react-icons/fi";
 

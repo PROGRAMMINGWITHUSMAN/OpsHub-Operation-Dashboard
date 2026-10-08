@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
   return (
-    <div className="flex flex-col items-start gap-8 py-6 bg-primary min-h-screen">
+    <div className="flex flex-col items-start gap-8 py-6 bg-primary h-screen">
       <h1 className="text-2xl font-bold text-secondary px-7 leading-none">
         OpsHub <br />
         <span className="text-secondary text-sm font-normal opacity-60">Operation Dashboard</span>

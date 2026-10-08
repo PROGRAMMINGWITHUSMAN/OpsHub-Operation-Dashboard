@@ -4,9 +4,21 @@ import { FaRegBell } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import { FiSun, FiMoon } from "react-icons/fi";
 import { FaGear } from "react-icons/fa6";
+import { ToastContainer, toast } from "react-toastify";
+// import  Bounce  from "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
   const [isDark, setIsDark] = React.useState(false);
+  const notfiy = () => {
+    toast.success(
+      `Switched to ${!isDark ? "Dark" : "Light"} Mode! (Under Maintenance)`,
+      {
+        position: "bottom-right",
+        autoClose: 2000,
+        theme: isDark ? "light" : "dark",
+      },
+    );
+  };
 
   return (
     <div className="flex items-center justify-between px-8 h-17.5 bg-secondary border-b border-primary/10">
@@ -23,7 +35,16 @@ const Header = () => {
 
       {/* Right Side */}
       <div className="flex items-center gap-3">
-        <div className="relative inline-flex items-center justify-center cursor-pointer p-2.5 rounded-full hover:bg-surface text-primary/80 hover:text-primary transition-all duration-200">
+        <div
+          onClick={() =>
+            toast("Coming Soon!", {
+              position: "bottom-right",
+              autoClose: 2000,
+              theme: isDark ? "light" : "dark",
+            })
+          }
+          className="relative inline-flex items-center justify-center cursor-pointer p-2.5 rounded-full hover:bg-surface text-primary/80 hover:text-primary transition-all duration-200"
+        >
           <FaRegBell size={24} />
           <GoDotFill
             size={15}
@@ -33,8 +54,15 @@ const Header = () => {
 
         <div className="rounded-xl px-2 py-1 gap-3 w-auto h-auto flex items-center justify-between border-l border-primary/10 pl-4">
           <img
+            onClick={() =>
+              toast("Coming Soon!", {
+                position: "bottom-right",
+                autoClose: 2000,
+                theme: isDark ? "light" : "dark",
+              })
+            }
             src="https://avatars.githubusercontent.com/u/161487398?v=4"
-            className="w-10 h-10 rounded-full ring-2 ring-surface"
+            className="w-10 h-10 rounded-full ring-2 ring-surface cursor-pointer"
             alt="Usman Ghani"
           />
           <div className="flex flex-col leading-none">
@@ -45,7 +73,10 @@ const Header = () => {
 
         {/* Dark Mode Toggle Button */}
         <div
-          onClick={() => setIsDark(!isDark)}
+          onClick={() => {
+            setIsDark(!isDark);
+            notfiy();
+          }}
           className={`relative w-16 h-8 rounded-full p-1 cursor-pointer transition-colors duration-300 flex items-center ${
             isDark ? "bg-primary" : "bg-surface"
           }`}
@@ -72,7 +103,16 @@ const Header = () => {
           </div>
         </div>
 
-        <button className="cursor-pointer p-2 rounded-full hover:bg-surface transition-colors duration-200">
+        <button
+          className="cursor-pointer p-2 rounded-full hover:bg-surface transition-colors duration-200"
+          onClick={() =>
+            toast("Coming Soon!", {
+              position: "bottom-right",
+              autoClose: 2000,
+              theme: isDark ? "light" : "dark",
+            })
+          }
+        >
           <FaGear size={21} className="text-primary/80" />
         </button>
       </div>
