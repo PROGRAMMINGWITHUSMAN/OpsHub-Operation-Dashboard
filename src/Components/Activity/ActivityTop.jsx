@@ -1,10 +1,9 @@
 import React from "react";  
-import { BsFillBoxSeamFill } from "react-icons/bs";
+import { FaShoppingCart } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { FaShoppingCart } from "react-icons/fa";
 
-const TopOrder = () => {
+const ActivityTop = () => {
   return (
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-4">
@@ -36,4 +35,4 @@ const TopOrder = () => {
   );
 };
 
-export default TopOrder;
+export default ActivityTop;

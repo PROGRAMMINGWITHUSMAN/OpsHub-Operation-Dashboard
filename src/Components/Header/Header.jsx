@@ -37,7 +37,7 @@ const Header = () => {
       <div className="flex items-center gap-3">
         <div
           onClick={() =>
-            toast("Coming Soon!", {
+            toast.warn("Coming Soon!", {
               position: "bottom-right",
               autoClose: 2000,
               theme: isDark ? "light" : "dark",
@@ -55,7 +55,7 @@ const Header = () => {
         <div className="rounded-xl px-2 py-1 gap-3 w-auto h-auto flex items-center justify-between border-l border-primary/10 pl-4">
           <img
             onClick={() =>
-              toast("Coming Soon!", {
+              toast.warn("Coming Soon!", {
                 position: "bottom-right",
                 autoClose: 2000,
                 theme: isDark ? "light" : "dark",
@@ -106,7 +106,7 @@ const Header = () => {
         <button
           className="cursor-pointer p-2 rounded-full hover:bg-surface transition-colors duration-200"
           onClick={() =>
-            toast("Coming Soon!", {
+            toast.warn("Coming Soon!", {
               position: "bottom-right",
               autoClose: 2000,
               theme: isDark ? "light" : "dark",
