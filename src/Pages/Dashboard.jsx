@@ -30,7 +30,7 @@ const Dashboard = () => {
     usersData,
     productsData,
     ordersData,
-  } = useAPIData();
+  } = useAPIData(); 
 
   console.log("USERS:", users);
   console.log("PRODUCTS:", products);

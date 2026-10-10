@@ -6,6 +6,7 @@ const activity = [
     time: "2026-10-04T08:30:00Z",
     relativeTime: "12m ago",
     subtitle: "Order #1024",
+    user: "Ayesha Khan"
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ const activity = [
     time: "2026-10-04T08:12:00Z",
     relativeTime: "30m ago",
     subtitle: "Hamza Ali",
+    user: "Hamza Ali Mazaari"
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ const activity = [
     time: "2026-10-04T08:00:00Z",
     relativeTime: "42m ago",
     subtitle: "Updated Payment Gateway API Keys",
+    user: "System Admin"
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ const activity = [
     time: "2026-10-04T07:55:00Z",
     relativeTime: "47m ago",
     subtitle: "Payment #5821 ($129.99)",
+    user: "Sara Ahmed"
   },
   {
     id: 5,
@@ -38,6 +42,7 @@ const activity = [
     time: "2026-10-04T07:45:00Z",
     relativeTime: "57m ago",
     subtitle: "Promotional Email Blast to Active Users",
+    user: "Notification Bot"
   },
   {
     id: 6,
@@ -46,6 +51,7 @@ const activity = [
     time: "2026-10-04T07:40:00Z",
     relativeTime: "1h ago",
     subtitle: "Order #1021",
+    user: "Usman Raza"
   },
   {
     id: 7,
@@ -54,6 +60,7 @@ const activity = [
     time: "2026-10-04T07:25:00Z",
     relativeTime: "1h ago",
     subtitle: "Account: tariq@example.com",
+    user: "Tariq Mahmood"
   },
   {
     id: 8,
@@ -62,6 +69,7 @@ const activity = [
     time: "2026-10-04T07:18:00Z",
     relativeTime: "1h ago",
     subtitle: "Order #1018",
+    user: "Mariam Siddiqui"
   },
   {
     id: 9,
@@ -70,6 +78,7 @@ const activity = [
     time: "2026-10-04T06:52:00Z",
     relativeTime: "1h ago",
     subtitle: "Bilal Ahmed",
+    user: "Bilal Ahmed"
   },
   {
     id: 10,
@@ -78,6 +87,7 @@ const activity = [
     time: "2026-10-04T06:40:00Z",
     relativeTime: "2h ago",
     subtitle: "September 2026 Performance",
+    user: "Analytics Engine"
   },
   {
     id: 11,
@@ -86,6 +96,7 @@ const activity = [
     time: "2026-10-04T06:30:00Z",
     relativeTime: "2h ago",
     subtitle: "Nike Air Max",
+    user: "Hassan Malik"
   },
   {
     id: 12,
@@ -94,6 +105,7 @@ const activity = [
     time: "2026-10-04T06:15:00Z",
     relativeTime: "2h ago",
     subtitle: "5 Stars by Fatima N.",
+    user: "Fatima N."
   },
   {
     id: 13,
@@ -102,6 +114,7 @@ const activity = [
     time: "2026-10-04T06:05:00Z",
     relativeTime: "2h ago",
     subtitle: "Payment #5817",
+    user: "Fatima Noor"
   },
   {
     id: 14,
@@ -110,6 +123,7 @@ const activity = [
     time: "2026-10-04T05:44:00Z",
     relativeTime: "3h ago",
     subtitle: "Order #1016",
+    user: "Zain Hassan"
   },
   {
     id: 15,
@@ -118,6 +132,7 @@ const activity = [
     time: "2026-10-04T05:30:00Z",
     relativeTime: "3h ago",
     subtitle: "Return & Refund Policy Terms",
+    user: "Policy Manager"
   },
   {
     id: 16,
@@ -126,6 +141,7 @@ const activity = [
     time: "2026-10-04T05:20:00Z",
     relativeTime: "3h ago",
     subtitle: "Order #1012",
+    user: "Noor Fatima"
   },
   {
     id: 17,
@@ -134,6 +150,7 @@ const activity = [
     time: "2026-10-04T05:05:00Z",
     relativeTime: "3h ago",
     subtitle: "$50 Credit to Account #402",
+    user: "Account #402"
   },
   {
     id: 18,
@@ -142,6 +159,7 @@ const activity = [
     time: "2026-10-04T04:58:00Z",
     relativeTime: "3h ago",
     subtitle: "Omar Farooq",
+    user: "Omar Farooq"
   },
   {
     id: 19,
@@ -150,6 +168,7 @@ const activity = [
     time: "2026-10-04T04:35:00Z",
     relativeTime: "4h ago",
     subtitle: "Payment #5810",
+    user: "Hira Shah"
   },
   {
     id: 20,
@@ -158,6 +177,7 @@ const activity = [
     time: "2026-10-04T04:20:00Z",
     relativeTime: "4h ago",
     subtitle: "Admin Account Secured",
+    user: "Security Guard"
   },
   {
     id: 21,
@@ -166,6 +186,7 @@ const activity = [
     time: "2026-10-04T04:10:00Z",
     relativeTime: "4h ago",
     subtitle: "Order #1008",
+    user: "Danish Iqbal"
   },
   {
     id: 22,
@@ -174,6 +195,7 @@ const activity = [
     time: "2026-10-04T03:48:00Z",
     relativeTime: "5h ago",
     subtitle: "Laiba Tariq",
+    user: "Laiba Tariq"
   },
   {
     id: 23,
@@ -182,6 +204,7 @@ const activity = [
     time: "2026-10-04T03:25:00Z",
     relativeTime: "5h ago",
     subtitle: "Apple AirPods Pro",
+    user: "Ahmed Hassan"
   },
   {
     id: 24,
@@ -190,6 +213,7 @@ const activity = [
     time: "2026-10-04T03:10:00Z",
     relativeTime: "5h ago",
     subtitle: "Flash Sale Alert Sent",
+    user: "Marketing Bot"
   },
   {
     id: 25,
@@ -198,6 +222,7 @@ const activity = [
     time: "2026-10-04T02:58:00Z",
     relativeTime: "5h ago",
     subtitle: "Sana Ahmed (Payment #5804)",
+    user: "Sana Ahmed"
   },
   {
     id: 26,
@@ -206,6 +231,7 @@ const activity = [
     time: "2026-10-04T02:35:00Z",
     relativeTime: "6h ago",
     subtitle: "Order #1003",
+    user: "Ali Raza"
   },
   {
     id: 27,
@@ -214,6 +240,7 @@ const activity = [
     time: "2026-10-04T02:20:00Z",
     relativeTime: "6h ago",
     subtitle: "Order Confirmation Layout",
+    user: "Template Admin"
   },
   {
     id: 28,
@@ -222,6 +249,7 @@ const activity = [
     time: "2026-10-04T02:12:00Z",
     relativeTime: "6h ago",
     subtitle: "Order #0998",
+    user: "Iqra Malik"
   },
   {
     id: 29,
@@ -230,6 +258,7 @@ const activity = [
     time: "2026-10-04T01:50:00Z",
     relativeTime: "6h ago",
     subtitle: "Rayyan Ahmed",
+    user: "Rayyan Ahmed"
   },
   {
     id: 30,
@@ -238,6 +267,7 @@ const activity = [
     time: "2026-10-04T01:40:00Z",
     relativeTime: "7h ago",
     subtitle: "Vendor Settlement #8821",
+    user: "Vendor #8821"
   },
   {
     id: 31,
@@ -246,6 +276,7 @@ const activity = [
     time: "2026-10-04T01:28:00Z",
     relativeTime: "7h ago",
     subtitle: "Mahnoor Khan",
+    user: "Mahnoor Khan"
   },
   {
     id: 32,
@@ -254,6 +285,7 @@ const activity = [
     time: "2026-10-04T01:05:00Z",
     relativeTime: "7h ago",
     subtitle: "Samsung Galaxy S24",
+    user: "Fahad Sheikh"
   },
   {
     id: 33,
@@ -262,6 +294,7 @@ const activity = [
     time: "2026-10-04T00:42:00Z",
     relativeTime: "8h ago",
     subtitle: "Payment #5792",
+    user: "Anaya Noor"
   },
   {
     id: 34,
@@ -270,6 +303,7 @@ const activity = [
     time: "2026-10-04T00:30:00Z",
     relativeTime: "8h ago",
     subtitle: "Real-time Visitors > 5,000",
+    user: "Traffic Monitor"
   },
   {
     id: 35,
@@ -278,6 +312,7 @@ const activity = [
     time: "2026-10-04T00:20:00Z",
     relativeTime: "8h ago",
     subtitle: "Order #0989",
+    user: "Saad Khan"
   },
   {
     id: 36,
@@ -286,6 +321,7 @@ const activity = [
     time: "2026-10-03T23:55:00Z",
     relativeTime: "8h ago",
     subtitle: "Order #0984",
+    user: "Eman Zahid"
   },
   {
     id: 37,
@@ -294,6 +330,7 @@ const activity = [
     time: "2026-10-03T23:40:00Z",
     relativeTime: "9h ago",
     subtitle: "Average Rating: 4.8 Stars",
+    user: "Review System"
   },
   {
     id: 38,
@@ -302,6 +339,7 @@ const activity = [
     time: "2026-10-03T23:32:00Z",
     relativeTime: "9h ago",
     subtitle: "Order #0979",
+    user: "Talha Asif"
   },
   {
     id: 39,
@@ -310,6 +348,7 @@ const activity = [
     time: "2026-10-03T23:08:00Z",
     relativeTime: "9h ago",
     subtitle: "Payment #5781",
+    user: "Areeba Hassan"
   },
   {
     id: 40,
@@ -318,6 +357,7 @@ const activity = [
     time: "2026-10-03T22:45:00Z",
     relativeTime: "10h ago",
     subtitle: "Waleed Ahmed",
+    user: "Waleed Ahmed"
   },
   {
     id: 41,
@@ -326,6 +366,7 @@ const activity = [
     time: "2026-10-03T22:20:00Z",
     relativeTime: "10h ago",
     subtitle: "Sony WH-1000XM5",
+    user: "Muneeb Raza"
   },
   {
     id: 42,
@@ -334,6 +375,7 @@ const activity = [
     time: "2026-10-03T22:05:00Z",
     relativeTime: "10h ago",
     subtitle: "IP: 192.168.1.100",
+    user: "Security Firewall"
   },
   {
     id: 43,
@@ -342,6 +384,7 @@ const activity = [
     time: "2026-10-03T21:55:00Z",
     relativeTime: "10h ago",
     subtitle: "Alina Shah",
+    user: "Alina Shah"
   },
   {
     id: 44,
@@ -350,6 +393,7 @@ const activity = [
     time: "2026-10-03T21:30:00Z",
     relativeTime: "11h ago",
     subtitle: "Yahya Iqbal (Payment #5770)",
+    user: "Yahya Iqbal"
   },
   {
     id: 45,
@@ -358,6 +402,7 @@ const activity = [
     time: "2026-10-03T21:05:00Z",
     relativeTime: "11h ago",
     subtitle: "Order #0974",
+    user: "Rida Khan"
   },
   {
     id: 46,
@@ -366,6 +411,7 @@ const activity = [
     time: "2026-10-03T20:42:00Z",
     relativeTime: "12h ago",
     subtitle: "Arham Malik",
+    user: "Arham Malik"
   },
   {
     id: 47,
@@ -374,6 +420,7 @@ const activity = [
     time: "2026-10-03T20:30:00Z",
     relativeTime: "12h ago",
     subtitle: "GST Adjusted to 18%",
+    user: "Finance Admin"
   },
   {
     id: 48,
@@ -382,6 +429,7 @@ const activity = [
     time: "2026-10-03T20:18:00Z",
     relativeTime: "12h ago",
     subtitle: "Payment #5764",
+    user: "Saim Ahmed"
   },
   {
     id: 49,
@@ -390,6 +438,7 @@ const activity = [
     time: "2026-10-03T19:55:00Z",
     relativeTime: "12h ago",
     subtitle: "Order #0968",
+    user: "Maha Raza"
   },
   {
     id: 50,
@@ -398,6 +447,7 @@ const activity = [
     time: "2026-10-03T19:30:00Z",
     relativeTime: "13h ago",
     subtitle: "Adidas Ultraboost",
+    user: "Hamza Siddiqui"
   },
   {
     id: 51,
@@ -406,6 +456,7 @@ const activity = [
     time: "2026-10-03T19:05:00Z",
     relativeTime: "13h ago",
     subtitle: "Maira Khan",
+    user: "Maira Khan"
   },
   {
     id: 52,
@@ -414,6 +465,7 @@ const activity = [
     time: "2026-10-03T18:40:00Z",
     relativeTime: "14h ago",
     subtitle: "Order #0961",
+    user: "Ibrahim Shah"
   },
   {
     id: 53,
@@ -422,6 +474,7 @@ const activity = [
     time: "2026-10-03T18:25:00Z",
     relativeTime: "14h ago",
     subtitle: "Order Delivery Status Updates",
+    user: "SMS Gateway"
   },
   {
     id: 54,
@@ -430,6 +483,7 @@ const activity = [
     time: "2026-10-03T18:15:00Z",
     relativeTime: "14h ago",
     subtitle: "Payment #5751",
+    user: "Hania Ahmed"
   },
   {
     id: 55,
@@ -438,6 +492,7 @@ const activity = [
     time: "2026-10-03T17:50:00Z",
     relativeTime: "15h ago",
     subtitle: "Order #0958",
+    user: "Faris Ali"
   },
   {
     id: 56,
@@ -446,6 +501,7 @@ const activity = [
     time: "2026-10-03T17:25:00Z",
     relativeTime: "15h ago",
     subtitle: "Nimra Tariq",
+    user: "Nimra Tariq"
   },
   {
     id: 57,
@@ -454,6 +510,7 @@ const activity = [
     time: "2026-10-03T17:00:00Z",
     relativeTime: "15h ago",
     subtitle: "Apple Watch Series 10",
+    user: "Abdullah Khan"
   },
   {
     id: 58,
@@ -462,6 +519,7 @@ const activity = [
     time: "2026-10-03T16:35:00Z",
     relativeTime: "16h ago",
     subtitle: "Order #0950",
+    user: "Mehwish Noor"
   },
   {
     id: 59,
@@ -470,6 +528,7 @@ const activity = [
     time: "2026-10-03T16:10:00Z",
     relativeTime: "16h ago",
     subtitle: "Payment #5738",
+    user: "Shahzaib Ahmed"
   },
   {
     id: 60,
@@ -478,6 +537,7 @@ const activity = [
     time: "2026-10-03T15:45:00Z",
     relativeTime: "17h ago",
     subtitle: "Eshal Khan",
+    user: "Eshal Khan"
   },
   {
     id: 61,
@@ -486,6 +546,7 @@ const activity = [
     time: "2026-10-03T15:30:00Z",
     relativeTime: "17h ago",
     subtitle: "Amount: $45.00",
+    user: "Wallet System"
   },
   {
     id: 62,
@@ -494,6 +555,7 @@ const activity = [
     time: "2026-10-03T15:20:00Z",
     relativeTime: "17h ago",
     subtitle: "Order #0942",
+    user: "Haris Raza"
   },
   {
     id: 63,
@@ -502,6 +564,7 @@ const activity = [
     time: "2026-10-03T14:55:00Z",
     relativeTime: "18h ago",
     subtitle: "Order #0939",
+    user: "Zoya Ahmed"
   },
   {
     id: 64,
@@ -510,6 +573,7 @@ const activity = [
     time: "2026-10-03T14:30:00Z",
     relativeTime: "18h ago",
     subtitle: "Payment #5729",
+    user: "Ammar Sheikh"
   },
   {
     id: 65,
@@ -518,6 +582,7 @@ const activity = [
     time: "2026-10-03T14:05:00Z",
     relativeTime: "18h ago",
     subtitle: "Komal Iqbal",
+    user: "Komal Iqbal"
   },
   {
     id: 66,
@@ -526,6 +591,7 @@ const activity = [
     time: "2026-10-03T13:40:00Z",
     relativeTime: "19h ago",
     subtitle: "Logitech MX Master 3S",
+    user: "Huzaifa Malik"
   },
   {
     id: 67,
@@ -534,6 +600,7 @@ const activity = [
     time: "2026-10-03T13:15:00Z",
     relativeTime: "19h ago",
     subtitle: "Order #0928",
+    user: "Saira Khan"
   },
   {
     id: 68,
@@ -542,6 +609,7 @@ const activity = [
     time: "2026-10-03T13:00:00Z",
     relativeTime: "19h ago",
     subtitle: "Current Rate: 3.4%",
+    user: "Analytics Bot"
   },
   {
     id: 69,
@@ -550,6 +618,7 @@ const activity = [
     time: "2026-10-03T12:50:00Z",
     relativeTime: "20h ago",
     subtitle: "Rehan Ahmed",
+    user: "Rehan Ahmed"
   },
   {
     id: 70,
@@ -558,6 +627,7 @@ const activity = [
     time: "2026-10-03T12:25:00Z",
     relativeTime: "20h ago",
     subtitle: "Order #0923",
+    user: "Amina Raza"
   },
   {
     id: 71,
@@ -566,6 +636,7 @@ const activity = [
     time: "2026-10-03T12:00:00Z",
     relativeTime: "20h ago",
     subtitle: "Payment #5712",
+    user: "Sameer Khan"
   },
   {
     id: 72,
@@ -574,6 +645,7 @@ const activity = [
     time: "2026-10-03T11:35:00Z",
     relativeTime: "21h ago",
     subtitle: "JBL Charge 5",
+    user: "Maryam Ali"
   },
   {
     id: 73,
@@ -582,6 +654,7 @@ const activity = [
     time: "2026-10-03T11:10:00Z",
     relativeTime: "21h ago",
     subtitle: "Order #0915",
+    user: "Yasir Mahmood"
   },
   {
     id: 74,
@@ -590,6 +663,7 @@ const activity = [
     time: "2026-10-03T10:45:00Z",
     relativeTime: "22h ago",
     subtitle: "Anum Farooq",
+    user: "Anum Farooq"
   },
   {
     id: 75,
@@ -598,6 +672,7 @@ const activity = [
     time: "2026-10-03T10:20:00Z",
     relativeTime: "22h ago",
     subtitle: "Saif Ahmed (Payment #5701)",
+    user: "Saif Ahmed"
   },
   {
     id: 76,
@@ -606,6 +681,7 @@ const activity = [
     time: "2026-10-03T09:55:00Z",
     relativeTime: "22h ago",
     subtitle: "Order #0907",
+    user: "Aleena Shah"
   },
   {
     id: 77,
@@ -614,6 +690,7 @@ const activity = [
     time: "2026-10-03T09:30:00Z",
     relativeTime: "23h ago",
     subtitle: "Noman Raza",
+    user: "Noman Raza"
   },
   {
     id: 78,
@@ -622,6 +699,7 @@ const activity = [
     time: "2026-10-03T09:05:00Z",
     relativeTime: "23h ago",
     subtitle: "Order #0902",
+    user: "Sana Malik"
   },
   {
     id: 79,
@@ -630,6 +708,7 @@ const activity = [
     time: "2026-10-03T08:40:00Z",
     relativeTime: "24h ago",
     subtitle: "Dell Inspiron 15",
+    user: "Faizan Ali"
   },
   {
     id: 80,
@@ -638,6 +717,7 @@ const activity = [
     time: "2026-10-03T08:15:00Z",
     relativeTime: "1d ago",
     subtitle: "Payment #5689",
+    user: "Maham Hassan"
   },
   {
     id: 81,
@@ -646,6 +726,7 @@ const activity = [
     time: "2026-10-03T07:50:00Z",
     relativeTime: "1d ago",
     subtitle: "Rayan Siddiqui",
+    user: "Rayan Siddiqui"
   },
   {
     id: 82,
@@ -654,6 +735,7 @@ const activity = [
     time: "2026-10-03T07:25:00Z",
     relativeTime: "1d ago",
     subtitle: "Order #0894",
+    user: "Aiman Noor"
   },
   {
     id: 83,
@@ -662,6 +744,7 @@ const activity = [
     time: "2026-10-03T07:00:00Z",
     relativeTime: "1d ago",
     subtitle: "Order #0889",
+    user: "Dawood Khan"
   },
   {
     id: 84,
@@ -670,6 +753,7 @@ const activity = [
     time: "2026-10-03T06:35:00Z",
     relativeTime: "1d ago",
     subtitle: "Inaya Ahmed",
+    user: "Inaya Ahmed"
   },
   {
     id: 85,
@@ -678,6 +762,7 @@ const activity = [
     time: "2026-10-03T06:10:00Z",
     relativeTime: "1d ago",
     subtitle: "Order #0883",
+    user: "Shayan Raza"
   },
   {
     id: 86,
@@ -686,6 +771,7 @@ const activity = [
     time: "2026-10-03T05:45:00Z",
     relativeTime: "1d ago",
     subtitle: "Payment #5668",
+    user: "Eman Khan"
   },
   {
     id: 87,
@@ -694,6 +780,7 @@ const activity = [
     time: "2026-10-03T05:20:00Z",
     relativeTime: "1d ago",
     subtitle: "Canon EOS R50",
+    user: "Musa Ahmed"
   },
   {
     id: 88,
@@ -702,6 +789,7 @@ const activity = [
     time: "2026-10-03T04:55:00Z",
     relativeTime: "1d ago",
     subtitle: "Hiba Raza",
+    user: "Hiba Raza"
   },
   {
     id: 89,
@@ -710,6 +798,7 @@ const activity = [
     time: "2026-10-03T04:30:00Z",
     relativeTime: "1d ago",
     subtitle: "Order #0871",
+    user: "Junaid Malik"
   },
   {
     id: 90,
@@ -718,6 +807,7 @@ const activity = [
     time: "2026-10-03T04:05:00Z",
     relativeTime: "1d ago",
     subtitle: "Payment #5653",
+    user: "Amna Tariq"
   },
   {
     id: 91,
@@ -726,6 +816,7 @@ const activity = [
     time: "2026-10-03T03:40:00Z",
     relativeTime: "1d ago",
     subtitle: "Order #0865",
+    user: "Adeel Khan"
   },
   {
     id: 92,
@@ -734,6 +825,7 @@ const activity = [
     time: "2026-10-03T03:15:00Z",
     relativeTime: "1d ago",
     subtitle: "Rimsha Ahmed",
+    user: "Rimsha Ahmed"
   },
   {
     id: 93,
@@ -742,6 +834,7 @@ const activity = [
     time: "2026-10-03T02:50:00Z",
     relativeTime: "1d ago",
     subtitle: "Order #0861",
+    user: "Waqas Ali"
   },
   {
     id: 94,
@@ -750,6 +843,7 @@ const activity = [
     time: "2026-10-03T02:25:00Z",
     relativeTime: "1d ago",
     subtitle: "Kindle Paperwhite",
+    user: "Areej Shah"
   },
   {
     id: 95,
@@ -758,6 +852,7 @@ const activity = [
     time: "2026-10-03T02:00:00Z",
     relativeTime: "1d ago",
     subtitle: "Payment #5631",
+    user: "Kashif Raza"
   },
   {
     id: 96,
@@ -766,6 +861,7 @@ const activity = [
     time: "2026-10-03T01:35:00Z",
     relativeTime: "1d ago",
     subtitle: "Sadia Noor",
+    user: "Sadia Noor"
   },
   {
     id: 97,
@@ -774,6 +870,7 @@ const activity = [
     time: "2026-10-03T01:10:00Z",
     relativeTime: "1d ago",
     subtitle: "Order #0852",
+    user: "Taha Ahmed"
   },
   {
     id: 98,
@@ -782,6 +879,7 @@ const activity = [
     time: "2026-10-03T00:45:00Z",
     relativeTime: "1d ago",
     subtitle: "Order #0847",
+    user: "Misha Khan"
   },
   {
     id: 99,
@@ -790,6 +888,7 @@ const activity = [
     time: "2026-10-03T00:20:00Z",
     relativeTime: "1d ago",
     subtitle: "Rashid Ali",
+    user: "Rashid Ali"
   },
   {
     id: 100,
@@ -798,7 +897,8 @@ const activity = [
     time: "2026-10-02T23:55:00Z",
     relativeTime: "1d ago",
     subtitle: "Maintenance Mode Toggled Off",
-  },
+    user: "System Config Bot"
+  }
 ];
 
 export default activity;
