@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaFilter } from "react-icons/fa";
 import { FaSort } from "react-icons/fa";
 import { TbXboxXFilled } from "react-icons/tb";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import usePagination from "../../Hooks/usePagination";
-import highlightText from "../../Utils/highlightText";
+import usePagination from "../../../Hooks/usePagination";
+import highlightText from "../../../Utils/highlightText";
 
 const Table = ({
   users,

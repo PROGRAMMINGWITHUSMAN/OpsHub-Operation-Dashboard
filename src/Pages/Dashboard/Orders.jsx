@@ -1,12 +1,12 @@
 import { useState } from "react";
-import StatOrder from "../Components/Orders/StatOrder";
-import TopOrder from "../Components/Orders/TopOrder";
+import StatOrder from "../../Components/Main/Orders/StatOrder.jsx";
+import TopOrder from "../../Components/Main/Orders/TopOrder.jsx";
 import { HiClock } from "react-icons/hi2";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import usePagination from "../Hooks/usePagination";
-import useAPIData from "../Data/useAPIData.jsx";
-import highlightText from "../Utils/highlightText.js";
+import usePagination from "../../Hooks/usePagination.js";
+import useAPIData from "../../Data/useAPIData.jsx";
+import highlightText from "../../Utils/highlightText.js";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { TbXboxXFilled } from "react-icons/tb";
 import {

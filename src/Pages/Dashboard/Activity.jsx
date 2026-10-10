@@ -1,16 +1,16 @@
 import { useState } from "react";
-import ActivityTop from "../Components/Activity/ActivityTop";
-import ActivityStat from "../Components/Activity/ActivityStat";
+import ActivityTop from "../../Components/Main/Activity/ActivityTop";
+import ActivityStat from "../../Components/Main/Activity/ActivityStat";
 import { FiActivity } from "react-icons/fi";
-import activityData from "../Data/activity";
+import activityData from "../../Data/activity";
 import { FaCalendarAlt } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { TbXboxXFilled } from "react-icons/tb";
 import { FaFilter } from "react-icons/fa";
 import { FaSort } from "react-icons/fa";
-import usePagination from "../Hooks/usePagination";
-import highlightText from "../Utils/highlightText";
+import usePagination from "../../Hooks/usePagination";
+import highlightText from "../../Utils/highlightText";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 

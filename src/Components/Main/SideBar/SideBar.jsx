@@ -15,8 +15,7 @@ const SideBar = () => {
       </h1>
       <div className="flex flex-col gap-1 px-4 w-60">
         <NavLink
-          to="/"
-          end
+          end to="/dashboard"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
               isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
@@ -28,7 +27,7 @@ const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/users"
+          to="/dashboard/users"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
               isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
@@ -40,7 +39,7 @@ const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/products"
+          to="/dashboard/products"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
               isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
@@ -52,7 +51,7 @@ const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/orders"
+          to="/dashboard/orders"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
               isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
@@ -64,7 +63,7 @@ const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/activity"
+          to="/dashboard/activity"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
               isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
@@ -76,7 +75,7 @@ const SideBar = () => {
         </NavLink>
 
         <NavLink
-          to="/settings"
+          to="/dashboard/settings"
           className={({ isActive }) =>
             `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
               isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"

@@ -1,7 +1,7 @@
-import useAPIData from "../Data/useAPIData.jsx";
+import useAPIData from "../../Data/useAPIData.jsx";
 import { BsFillBoxSeamFill } from "react-icons/bs";
-import Top from "../Components/Products/Top.jsx";
-import Stats from "../Components/Products/Stats.jsx";
+import Top from "../../Components/Main/Products/Top.jsx";
+import Stats from "../../Components/Main/Products/Stats.jsx";
 import { GoDotFill } from "react-icons/go";
 import { GoAlertFill } from "react-icons/go";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -10,10 +10,10 @@ import { FaFilter } from "react-icons/fa";
 import { FaSort } from "react-icons/fa";
 import { useState } from "react";
 import { IoIosStar } from "react-icons/io";
-import usePagination from "../Hooks/usePagination";
+import usePagination from "../../Hooks/usePagination";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import highlightText from "../Utils/highlightText.js";
+import highlightText from "../../Utils/highlightText.js";
 
 const Products = () => {
   const { products, isProductsPending, isProductsError, productsError } =

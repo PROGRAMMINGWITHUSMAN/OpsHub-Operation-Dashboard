@@ -1,15 +1,15 @@
 import { useState } from "react";
-import Stat from "../Components/Dashboard/Stat";
+import Stat from "../../Components/Main/Dashboard/Stat.jsx";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { BsFillBoxSeamFill } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa";
-import Chart from "../Components/Dashboard/Chart";
-import RecentOrders from "../Components/Dashboard/RecentOrders";
-import RecentActivity from "../Components/Dashboard/RecentActivity";
-import activity from "../Data/activity";
-import TopBar from "../Components/Dashboard/TopBar";
-import useAPIData from "../Data/useAPIData.jsx";
+import Chart from "../../Components/Main/Dashboard/Chart.jsx";
+import RecentOrders from "../../Components/Main/Dashboard/RecentOrders.jsx";
+import RecentActivity from "../../Components/Main/Dashboard/RecentActivity.jsx";
+import activity from "../../Data/activity.js";
+import TopBar from "../../Components/Main/Dashboard/TopBar.jsx";
+import useAPIData from "../../Data/useAPIData.jsx";
 
 const Dashboard = () => {
   const {
@@ -32,9 +32,9 @@ const Dashboard = () => {
     ordersData,
   } = useAPIData(); 
 
-  console.log("USERS:", users);
-  console.log("PRODUCTS:", products);
-  console.log("ORDERS:", orders);
+  // console.log("USERS:", users);
+  // console.log("PRODUCTS:", products);
+  // console.log("ORDERS:", orders);
 
   // const {
   //   data: usersData,
@@ -148,15 +148,15 @@ const Dashboard = () => {
 
   const pendingOrders = orders.filter((order) => order.status === "Pending");
 
-  const [selectedRange, setSelectedRange] = useState("last7days");
+  // const [selectedRange, setSelectedRange] = useState("last7days");
 
-  const dateOptions = [
-    { label: "Today", value: "today" },
-    { label: "Yesterday", value: "yesterday" },
-    { label: "Last 7 Days", value: "last7days" },
-    { label: "Last 30 Days", value: "last30days" },
-    { label: "This Month", value: "thisMonth" },
-  ];
+  // const dateOptions = [
+  //   { label: "Today", value: "today" },
+  //   { label: "Yesterday", value: "yesterday" },
+  //   { label: "Last 7 Days", value: "last7days" },
+  //   { label: "Last 30 Days", value: "last30days" },
+  //   { label: "This Month", value: "thisMonth" },
+  // ];
 
   return (
     <div className="px-6 py-6 bg-secondary flex flex-col gap-6">

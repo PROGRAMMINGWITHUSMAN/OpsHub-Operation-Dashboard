@@ -1,11 +1,11 @@
 import { useState } from "react";
-import TopBar from "../Components/User/TopBar";
+import TopBar from "../../Components/Main/User/Topbar.jsx";
 import { GoDotFill } from "react-icons/go";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaFilter } from "react-icons/fa";
-import Stat from "../Components/User/Stat";
-import useAPIData from "../Data/useAPIData.jsx";
-import Table from "../Components/User/Table";
+import Stat from "../../Components/Main/User/Stat";
+import useAPIData from "../../Data/useAPIData.jsx";
+import Table from "../../Components/Main/User/Table";
 
 const Users = () => {
   const { users, isUsersPending, isUsersError, usersError } = useAPIData();
