@@ -1,21 +1,23 @@
-import React from "react";
-import { FaMagnifyingGlass } from "react-icons/fa6";
+import { useState, useContext } from "react";
+import { FaMagnifyingGlass, FaGear } from "react-icons/fa6";
 import { FaRegBell } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
-import { FiSun, FiMoon } from "react-icons/fi";
-import { FaGear } from "react-icons/fa6";
+import { FiSun, FiMoon, FiMenu } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { useContext } from "react";
 import { AuthContext } from "../../../Context/AuthContextProvider";
-import { useNavigate } from "react-router-dom";
 
-const Header = () => {
-  const { getSignup, login, isLogin } = useContext(AuthContext);
+const Header = ({ onMenuClick }) => {
+  const { login } = useContext(AuthContext);
+  const [isDark, setIsDark] = useState(false);
 
-  // console.log(login);
+  const comingSoon = () =>
+    toast.warn("Coming Soon!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      theme: isDark ? "light" : "dark",
+    });
 
-  const [isDark, setIsDark] = React.useState(false);
-  const notfiy = () => {
+  const notify = () => {
     toast.success(
       `Switched to ${!isDark ? "Dark" : "Light"} Mode! (Under Maintenance)`,
       {
@@ -27,67 +29,68 @@ const Header = () => {
   };
 
   return (
-    <div className="flex items-center justify-between px-8 h-17.5 bg-secondary border-b border-primary/10">
-      {/* Search Input Box */}
-      <div className="flex items-center gap-3 w-80 rounded-full bg-surface px-4 py-2.5 border border-transparent focus-within:border-primary transition-all duration-200">
-        <FaMagnifyingGlass size={18} className="text-primary/60" />
+    <div className="flex h-17.5 items-center justify-between gap-3 border-b border-primary/10 bg-secondary px-4 sm:px-8">
+      {/* Left: hamburger + search */}
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <button
+          onClick={onMenuClick}
+          className="cursor-pointer rounded-lg bg-surface p-2 text-primary lg:hidden"
+          aria-label="Open menu"
+        >
+          <FiMenu size={20} />
+        </button>
 
-        <input
-          type="text"
-          placeholder="Search anything..."
-          className="w-full bg-transparent text-sm text-primary placeholder:text-primary/50 outline-none"
-        />
+        <div className="flex w-full max-w-xs items-center gap-3 rounded-full border border-transparent bg-surface px-4 py-2.5 transition-all duration-200 focus-within:border-primary sm:w-80">
+          <FaMagnifyingGlass size={18} className="shrink-0 text-primary/60" />
+          <input
+            type="text"
+            placeholder="Search anything..."
+            className="w-full min-w-0 bg-transparent text-sm text-primary outline-none placeholder:text-primary/50"
+          />
+        </div>
       </div>
 
-      {/* Right Side */}
-      <div className="flex items-center gap-3">
+      {/* Right side */}
+      <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        {/* Bell */}
         <div
-          onClick={() =>
-            toast.warn("Coming Soon!", {
-              position: "bottom-right",
-              autoClose: 2000,
-              theme: isDark ? "light" : "dark",
-            })
-          }
-          className="relative inline-flex items-center justify-center cursor-pointer p-2.5 rounded-full hover:bg-surface text-primary/80 hover:text-primary transition-all duration-200"
+          onClick={comingSoon}
+          className="relative inline-flex cursor-pointer items-center justify-center rounded-full p-2.5 text-primary/80 transition-all duration-200 hover:bg-surface hover:text-primary"
         >
           <FaRegBell size={24} />
           <GoDotFill
             size={15}
-            className="text-accent absolute top-1.5 right-1.5 animate-pulse"
+            className="absolute right-1.5 top-1.5 animate-pulse text-accent"
           />
         </div>
 
-        <div className="rounded-xl px-2 py-1 gap-3 w-auto h-auto flex items-center justify-between border-l border-primary/10 pl-4">
+        {/* Profile */}
+        <div className="flex items-center gap-3 sm:border-l sm:border-primary/10 sm:pl-4">
           <img
-            onClick={() =>
-              toast.warn("Coming Soon!", {
-                position: "bottom-right",
-                autoClose: 2000,
-                theme: isDark ? "light" : "dark",
-              })
-            }
+            onClick={comingSoon}
             src="https://avatars.githubusercontent.com/u/161487398?v=4"
-            className="w-10 h-10 rounded-full ring-2 ring-surface cursor-pointer"
+            className="h-10 w-10 cursor-pointer rounded-full ring-2 ring-surface"
             alt="Usman Ghani"
           />
-          <div className="flex flex-col leading-none">
-            <p className="text-sm font-medium text-primary">{login.name ? login.name : "Usman Ghani"}</p>
-            <p className="text-xs text-primary/60">Administrator</p>
+          <div className="hidden flex-col leading-none md:flex">
+            <p className="text-sm font-medium text-primary">
+              {login?.name ? login.name : "Usman Ghani"}
+            </p>
+            <p className="mt-1 text-xs text-primary/60">Administrator</p>
           </div>
         </div>
 
-        {/* Dark Mode Toggle Button */}
+        {/* Dark Mode Toggle */}
         <div
           onClick={() => {
             setIsDark(!isDark);
-            notfiy();
+            notify();
           }}
-          className={`relative w-16 h-8 rounded-full p-1 cursor-pointer transition-colors duration-300 flex items-center ${
+          className={`relative hidden h-8 w-16 cursor-pointer items-center rounded-full p-1 transition-colors duration-300 sm:flex ${
             isDark ? "bg-primary" : "bg-surface"
           }`}
         >
-          <div className="absolute inset-0 flex items-center justify-between px-2 text-xs select-none">
+          <div className="absolute inset-0 flex select-none items-center justify-between px-2 text-xs">
             <FiSun
               className={`${isDark ? "text-secondary/40" : "opacity-0"} transition-opacity duration-300`}
               size={14}
@@ -99,7 +102,7 @@ const Header = () => {
           </div>
 
           <div
-            className={`relative z-10 w-6 h-6 rounded-full flex items-center justify-center shadow-md transform transition-all duration-300 ease-in-out ${
+            className={`relative z-10 flex h-6 w-6 transform items-center justify-center rounded-full shadow-md transition-all duration-300 ease-in-out ${
               isDark
                 ? "translate-x-8 bg-secondary text-primary"
                 : "translate-x-0 bg-primary text-secondary"
@@ -109,17 +112,12 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Settings */}
         <button
-          className="cursor-pointer p-2 rounded-full hover:bg-surface transition-colors duration-200"
-          onClick={() =>
-            toast.warn("Coming Soon!", {
-              position: "bottom-right",
-              autoClose: 2000,
-              theme: isDark ? "light" : "dark",
-            })
-          }
+          className="hidden cursor-pointer rounded-full p-2 text-primary/80 transition-colors duration-200 hover:bg-surface sm:block"
+          onClick={comingSoon}
         >
-          <FaGear size={21} className="text-primary/80" />
+          <FaGear size={21} />
         </button>
       </div>
     </div>

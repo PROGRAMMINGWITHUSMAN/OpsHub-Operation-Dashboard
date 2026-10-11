@@ -1,18 +1,12 @@
-import React from "react";
-import { BsFillBoxSeamFill } from "react-icons/bs";
-
-
-const Stats = ({ value, text, icon}) => {
+const Stats = ({ value, text, icon }) => {
   return (
-    <div className="flex gap-4 bg-surface p-4 rounded-2xl items-center justify-start w-full ">
-      <div className="bg-primary/10 p-4 rounded-2xl">
-        {icon}
-      </div>
-      <div>
-        <p className="text-text-muted font-medium">{text}</p>
-        <p className="text-text-primary text-3xl font-bold">
-          {value}
-        </p>
+    <div className="bg-surface p-5 rounded-2xl border border-surface-muted w-full">
+      <div className="flex items-center justify-center sm:justify-start gap-4">
+        <div className="bg-primary/10 rounded-2xl p-3 shrink-0">{icon}</div>
+        <div className="flex flex-col">
+          <p className="text-text-muted text-base font-medium">{text}</p>
+          <p className="text-text-primary font-bold text-3xl">{value}</p>
+        </div>
       </div>
     </div>
   );

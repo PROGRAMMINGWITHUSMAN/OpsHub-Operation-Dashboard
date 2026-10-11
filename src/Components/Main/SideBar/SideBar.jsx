@@ -6,86 +6,45 @@ import { FiActivity } from "react-icons/fi";
 import { FaGear } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 
-const SideBar = () => {
+const links = [
+  { to: "/dashboard", label: "Dashboard", icon: MdHome, end: true },
+  { to: "/dashboard/users", label: "Users", icon: FaUser },
+  { to: "/dashboard/products", label: "Products", icon: GoPackage },
+  { to: "/dashboard/orders", label: "Orders", icon: FaShoppingCart },
+  { to: "/dashboard/activity", label: "Activity", icon: FiActivity },
+  { to: "/dashboard/settings", label: "Settings", icon: FaGear },
+];
+
+const SideBar = ({ onNavigate }) => {
   return (
-    <div className="flex flex-col items-start gap-8 py-6 bg-primary h-screen">
-      <h1 className="text-2xl font-bold text-secondary px-7 leading-none">
+    <div className="flex h-full flex-col gap-8 overflow-y-auto bg-primary py-6">
+      <h1 className="px-7 text-2xl font-bold leading-none text-secondary">
         OpsHub <br />
-        <span className="text-secondary text-sm font-normal opacity-60">Operation Dashboard</span>
+        <span className="text-sm font-normal text-secondary opacity-60">
+          Operation Dashboard
+        </span>
       </h1>
-      <div className="flex flex-col gap-1 px-4 w-60">
-        <NavLink
-          end to="/dashboard"
-          className={({ isActive }) =>
-            `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
-            }`
-          }
-        >
-          <MdHome size={20} />
-          <p>Dashboard</p>
-        </NavLink>
 
-        <NavLink
-          to="/dashboard/users"
-          className={({ isActive }) =>
-            `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
-            }`
-          }
-        >
-          <FaUser size={20} />
-          <p>Users</p>
-        </NavLink>
-
-        <NavLink
-          to="/dashboard/products"
-          className={({ isActive }) =>
-            `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
-            }`
-          }
-        >
-          <GoPackage size={20} />
-          <p>Products</p>
-        </NavLink>
-
-        <NavLink
-          to="/dashboard/orders"
-          className={({ isActive }) =>
-            `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
-            }`
-          }
-        >
-          <FaShoppingCart size={20} />
-          <p>Orders</p>
-        </NavLink>
-
-        <NavLink
-          to="/dashboard/activity"
-          className={({ isActive }) =>
-            `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
-            }`
-          }
-        >
-          <FiActivity size={20} />
-          <p>Activity</p>
-        </NavLink>
-
-        <NavLink
-          to="/dashboard/settings"
-          className={({ isActive }) =>
-            `cursor-pointer flex items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
-              isActive ? "bg-secondary text-primary font-medium" : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
-            }`
-          }
-        >
-          <FaGear size={20} />
-          <p>Settings</p>
-        </NavLink>
-      </div>
+      <nav className="flex flex-col gap-1 px-4">
+        {links.map(({ to, label, icon: Icon, end }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={end}
+            onClick={onNavigate}
+            className={({ isActive }) =>
+              `flex cursor-pointer items-center gap-3 rounded-lg px-5 py-3 text-start transition-colors ${
+                isActive
+                  ? "bg-secondary font-medium text-primary"
+                  : "text-secondary/70 hover:bg-secondary/10 hover:text-secondary"
+              }`
+            }
+          >
+            <Icon size={20} />
+            <p>{label}</p>
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 };

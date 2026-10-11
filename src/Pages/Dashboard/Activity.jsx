@@ -46,6 +46,25 @@ const categoryStyles = {
   settings: "bg-surface-muted text-text-muted border-surface-muted",
 };
 
+const highlightClass =
+  "bg-accent/20 text-text-primary font-semibold rounded px-0.5";
+
+const Highlighted = ({ data, fallback }) =>
+  data.match ? (
+    <>
+      {data.before}
+      <span className={highlightClass}>{data.match}</span>
+      {data.after}
+    </>
+  ) : (
+    fallback
+  );
+
+const controlClass =
+  "w-full cursor-pointer bg-surface border border-surface-muted text-sm text-text-primary rounded-xl pl-10 pr-4 py-3 outline-none hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10 transition";
+const iconLeft =
+  "absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none";
+
 const Activity = () => {
   const todayActivities = activityData.filter(
     (item) => item.relativeTime === "1d ago" || item.relativeTime === "24h ago",
@@ -78,20 +97,14 @@ const Activity = () => {
       elem.user.toLowerCase().includes(search);
 
     const matchesFilter =
-      filter === "all" || elem.about.toLowerCase() == filter.toLowerCase();
+      filter === "all" || elem.about.toLowerCase() === filter.toLowerCase();
 
     return matchesSearch && matchesFilter;
   });
 
   const sortedActivities = [...filteredActivities].sort((a, b) => {
-    if (sort === "time-asc") {
-      return new Date(a.time) - new Date(b.time);
-    }
-
-    if (sort === "time-desc") {
-      return new Date(b.time) - new Date(a.time);
-    }
-
+    if (sort === "time-asc") return new Date(a.time) - new Date(b.time);
+    if (sort === "time-desc") return new Date(b.time) - new Date(a.time);
     return 0;
   });
 
@@ -102,7 +115,7 @@ const Activity = () => {
     startIndex,
     nextPage,
     previousPage,
-    itemsPerPage: usersPerPage,
+    itemsPerPage: activitiesPerPage,
     setCurrentPage,
   } = usePagination(sortedActivities, 10);
 
@@ -129,17 +142,22 @@ const Activity = () => {
       variants={container}
       initial="hidden"
       animate="show"
-      className="p-6 bg-secondary flex flex-col gap-5"
+      className="p-4 sm:p-6 bg-secondary flex flex-col gap-4 sm:gap-5"
     >
       {/* Top Bar */}
       <motion.div variants={item}>
         <ActivityTop />
       </motion.div>
 
-      {/* Stats */}
-      <div className="flex gap-4 flex-wrap justify-center">
+      {/* Stats: mobile 1 column, tablet se upar 3 */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {stats.map((stat) => (
-          <motion.div key={stat.title} variants={item} whileHover={{ y: -4 }}>
+          <motion.div
+            key={stat.title}
+            variants={item}
+            whileHover={{ y: -4 }}
+            className="flex"
+          >
             <ActivityStat {...stat} />
           </motion.div>
         ))}
@@ -148,16 +166,19 @@ const Activity = () => {
       {/* Activity Table */}
       <motion.div
         variants={item}
-        className="flex flex-col gap-4 bg-surface rounded-2xl p-4"
+        className="flex flex-col gap-4 bg-surface rounded-2xl p-4 sm:p-5 min-w-0"
       >
-        <p className="text-text-muted text-2xl font-medium">All Activities</p>
+        <p className="text-text-muted text-xl sm:text-2xl font-medium">
+          All Activities
+        </p>
 
-        <div className="flex gap-3">
+        {/* Controls: mobile pe neeche neeche, bari screen pe ek row */}
+        <div className="flex flex-col lg:flex-row gap-3">
           {/* Search */}
           <div className="relative w-full">
             <FaMagnifyingGlass
               size={17}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
             />
 
             <input
@@ -168,7 +189,7 @@ const Activity = () => {
                 setCurrentPage(1);
               }}
               placeholder="Search Activities..."
-              className="w-full bg-surface border border-surface-muted rounded-xl py-3 pl-11 pr-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+              className="w-full bg-surface border border-surface-muted rounded-xl py-3 pl-11 pr-10 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
             />
 
             <TbXboxXFilled
@@ -181,21 +202,17 @@ const Activity = () => {
             />
           </div>
 
-          <div className="flex gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex gap-3">
             {/* Filter */}
             <div className="relative">
-              <FaFilter
-                size={14}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
-              />
-
+              <FaFilter size={14} className={iconLeft} />
               <select
                 value={filter}
                 onChange={(e) => {
                   setFilter(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="cursor-pointer bg-surface border border-surface-muted text-sm text-text-primary rounded-xl pl-10 pr-4 py-3 outline-none hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                className={controlClass}
               >
                 <option value="all">All</option>
                 <option value="cart">Cart</option>
@@ -212,18 +229,14 @@ const Activity = () => {
 
             {/* Sort */}
             <div className="relative">
-              <FaSort
-                size={14}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
-              />
-
+              <FaSort size={14} className={iconLeft} />
               <select
                 value={sort}
                 onChange={(e) => {
                   setSort(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="cursor-pointer bg-surface border border-surface-muted text-sm text-text-primary rounded-xl pl-10 pr-4 py-3 outline-none hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                className={controlClass}
               >
                 <option value="none">None</option>
                 <option value="time-asc">Time ↑</option>
@@ -232,48 +245,43 @@ const Activity = () => {
             </div>
 
             {/* Clear */}
-            <div className="relative">
+            <div className="relative col-span-2 sm:col-span-1">
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={clearFilters}
-                className="cursor-pointer bg-surface border border-surface-muted text-sm text-text-primary rounded-xl pl-10 pr-4 py-3 outline-none hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+                className={`${controlClass} text-left`}
               >
                 Clear
-                <TbXboxXFilled
-                  size={14}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
-                />
               </motion.button>
+              <TbXboxXFilled size={14} className={iconLeft} />
             </div>
           </div>
         </div>
 
-        <table className="w-full text-left text-sm">
-          <thead>
-            <tr className="border-b border-surface-muted text-text-muted">
-              <th className="py-2 pr-4 font-medium">Activity ID</th>
-              <th className="py-2 pr-4 font-medium">Activity</th>
-              <th className="py-2 pr-4 font-medium">User</th>
-              <th className="py-2 pr-4 font-medium">Type</th>
-              <th className="py-2 pr-4 font-medium">Time</th>
-            </tr>
-          </thead>
-
-          {/* key badalne pe rows ki animation dobara chalti hai */}
-          <tbody key={`${currentPage}-${filter}-${sort}`}>
-            {currentPageActivities.length === 0 ? (
-              <tr>
-                <td colSpan="5" className="py-8 text-center text-text-muted">
-                  No activities found.
-                </td>
+        {/* Chhoti screen pe side se scroll hota hai */}
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-150 text-left text-sm">
+            <thead>
+              <tr className="border-b border-surface-muted text-text-muted">
+                <th className="py-2 pr-4 font-medium">Activity ID</th>
+                <th className="py-2 pr-4 font-medium">Activity</th>
+                <th className="py-2 pr-4 font-medium">User</th>
+                <th className="py-2 pr-4 font-medium">Type</th>
+                <th className="py-2 pr-4 font-medium">Time</th>
               </tr>
-            ) : (
-              currentPageActivities.map((elem, idx) => {
-                const title = highlightText(elem.title, input);
-                const user = highlightText(elem.user, input);
+            </thead>
 
-                return (
+            {/* key badalne pe rows ki animation dobara chalti hai */}
+            <tbody key={`${currentPage}-${filter}-${sort}`}>
+              {currentPageActivities.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="py-8 text-center text-text-muted">
+                    No activities found.
+                  </td>
+                </tr>
+              ) : (
+                currentPageActivities.map((elem, idx) => (
                   <motion.tr
                     key={elem.id}
                     initial={{ opacity: 0, y: 10 }}
@@ -281,103 +289,80 @@ const Activity = () => {
                     transition={{ duration: 0.3, delay: idx * 0.04 }}
                     className="border-b border-surface-muted/60 hover:bg-secondary/50 transition-colors"
                   >
-                    <td className="py-3 pr-4 font-medium text-text-primary">
-                      <span className="flex px-3 items-center gap-1">
-                        {`#ACT-${String(elem.id).padStart(3, "0")}`}
-                      </span>
+                    <td className="py-3 pr-4 font-medium text-text-primary whitespace-nowrap">
+                      {`#ACT-${String(elem.id).padStart(3, "0")}`}
+                    </td>
+
+                    <td className="py-3 pr-4 text-text-primary min-w-48">
+                      <Highlighted
+                        data={highlightText(elem.title, input)}
+                        fallback={elem.title}
+                      />
+                    </td>
+
+                    <td className="py-3 pr-4 text-text-primary whitespace-nowrap">
+                      <Highlighted
+                        data={highlightText(elem.user, input)}
+                        fallback={elem.user}
+                      />
                     </td>
 
                     <td className="py-3 pr-4 text-text-primary">
-                      {title.match ? (
-                        <>
-                          {title.before}
-                          <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
-                            {title.match}
-                          </span>
-                          {title.after}
-                        </>
-                      ) : (
-                        elem.title
-                      )}
-                    </td>
-
-                    <td className="py-3 pr-4 text-text-primary">
-                      {user.match ? (
-                        <>
-                          {user.before}
-                          <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
-                            {user.match}
-                          </span>
-                          {user.after}
-                        </>
-                      ) : (
-                        elem.user
-                      )}
-                    </td>
-
-                    <td className="py-3 pr-4 text-text-primary capitalize">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold capitalize ${categoryStyles[elem.about] ?? categoryStyles.settings}`}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold capitalize whitespace-nowrap ${categoryStyles[elem.about] ?? categoryStyles.settings}`}
                       >
                         {elem.about}
                       </span>
                     </td>
 
-                    <td className="py-3 pr-4 text-text-primary">
+                    <td className="py-3 pr-4 text-text-primary whitespace-nowrap">
                       {elem.relativeTime}
                     </td>
                   </motion.tr>
-                );
-              })
-            )}
-          </tbody>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
-          <tfoot>
-            {sortedActivities.length > 0 && (
-              <tr>
-                <td colSpan="5" className="py-8 text-center text-text-muted">
-                  <div className="flex justify-center gap-5 items-center">
-                    <motion.button
-                      disabled={currentPage === 1}
-                      onClick={previousPage}
-                      whileHover={
-                        currentPage === 1 ? undefined : { scale: 1.05 }
-                      }
-                      whileTap={currentPage === 1 ? undefined : { scale: 0.95 }}
-                      className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      <MdOutlineKeyboardArrowLeft size={20} /> Previous
-                    </motion.button>
+        {/* Pagination: table se bahar, taake mobile pe scroll ke saath na jaye */}
+        {sortedActivities.length > 0 && (
+          <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 py-2">
+            <motion.button
+              disabled={currentPage === 1}
+              onClick={previousPage}
+              whileHover={currentPage === 1 ? undefined : { scale: 1.05 }}
+              whileTap={currentPage === 1 ? undefined : { scale: 0.95 }}
+              className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <MdOutlineKeyboardArrowLeft size={20} /> Previous
+            </motion.button>
 
-                    <p className="text-text-muted text-xs">
-                      Showing {startIndex + 1}-
-                      {Math.min(
-                        startIndex + usersPerPage,
-                        sortedActivities.length,
-                      )}{" "}
-                      Of {` ${sortedActivities.length}`}
-                    </p>
+            <p className="text-text-muted text-xs order-last w-full text-center sm:order-none sm:w-auto">
+              Showing {startIndex + 1}-
+              {Math.min(
+                startIndex + activitiesPerPage,
+                sortedActivities.length,
+              )}{" "}
+              Of {sortedActivities.length}
+            </p>
 
-                    <motion.button
-                      disabled={currentPage === totalPages}
-                      onClick={nextPage}
-                      whileHover={
-                        currentPage === totalPages ? undefined : { scale: 1.05 }
-                      }
-                      whileTap={
-                        currentPage === totalPages ? undefined : { scale: 0.95 }
-                      }
-                      className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      Next
-                      <MdOutlineKeyboardArrowRight size={20} />
-                    </motion.button>
-                  </div>
-                </td>
-              </tr>
-            )}
-          </tfoot>
-        </table>
+            <motion.button
+              disabled={currentPage === totalPages}
+              onClick={nextPage}
+              whileHover={
+                currentPage === totalPages ? undefined : { scale: 1.05 }
+              }
+              whileTap={
+                currentPage === totalPages ? undefined : { scale: 0.95 }
+              }
+              className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Next
+              <MdOutlineKeyboardArrowRight size={20} />
+            </motion.button>
+          </div>
+        )}
       </motion.div>
     </motion.div>
   );

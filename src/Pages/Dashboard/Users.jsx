@@ -48,24 +48,29 @@ const Users = () => {
       variants={container}
       initial="hidden"
       animate="show"
-      className="p-6 flex flex-col gap-5 bg-secondary"
+      className="p-4 sm:p-6 flex flex-col gap-4 sm:gap-5 bg-secondary"
     >
       {/* Top Bar */}
       <motion.div variants={item}>
         <TopBar />
       </motion.div>
 
-      {/* Stats */}
-      <div className="flex gap-4 flex-wrap justify-center">
+      {/* Stats: mobile 1 column, tablet se upar 3 */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {stats.map((stat) => (
-          <motion.div key={stat.title} variants={item} whileHover={{ y: -4 }}>
+          <motion.div
+            key={stat.title}
+            variants={item}
+            whileHover={{ y: -4 }}
+            className="flex"
+          >
             <Stat {...stat} />
           </motion.div>
         ))}
       </div>
 
       {/* Table Container */}
-      <motion.div variants={item}>
+      <motion.div variants={item} className="min-w-0">
         <Table
           users={users}
           isUsersPending={isUsersPending}

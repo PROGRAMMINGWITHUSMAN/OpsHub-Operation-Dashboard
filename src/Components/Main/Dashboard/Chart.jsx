@@ -12,6 +12,13 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 
 const DAY = 86400000;
 
+const rangeLabels = {
+  today: "24 Hours",
+  yesterday: "Yesterday",
+  "7d": "7 Days",
+  "30d": "30 Days",
+};
+
 const Chart = ({ dailySales = [] }) => {
   const [range, setRange] = useState("30d");
 
@@ -39,50 +46,50 @@ const Chart = ({ dailySales = [] }) => {
   }, [dailySales, range]);
 
   return (
-    <div className="bg-surface rounded-2xl p-4 flex-1 h-[28rem] flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <div className="bg-primary/10 rounded-2xl p-3">
-         <FaArrowTrendUp size={30} className="text-primary" />
-        </div>
-          <div className="flex flex-col">
-            <h2 className="text-2xl font-bold text-text-primary">
-              Sales OverView
+    <div className="bg-surface rounded-2xl p-4 sm:p-5 flex-1 min-w-0 flex flex-col gap-4">
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <div className="bg-primary/10 rounded-2xl p-2.5 sm:p-3 shrink-0">
+            <FaArrowTrendUp className="text-primary w-6 h-6 sm:w-7 sm:h-7" />
+          </div>
+          <div className="flex flex-col min-w-0">
+            <h2 className="text-xl sm:text-2xl font-bold text-text-primary">
+              Sales Overview
             </h2>
-            <p className="text-text-muted">
-              Total Sales Over the Last{" "}
-              <span className="uppercase">
-                {range === "today" ? "24 Hours" : range}
-              </span>
+            <p className="text-text-muted text-sm">
+              {range === "yesterday"
+                ? "Total Sales Yesterday"
+                : `Total Sales Over the Last ${rangeLabels[range]}`}
             </p>
           </div>
         </div>
-        <div className="flex justify-end mb-2">
-          <select
-            value={range}
-            onChange={(e) => setRange(e.target.value)}
-            className="bg-surface-muted text-text-primary text-sm rounded-lg px-3 py-1 outline-none"
-          >
-            <option value="today">Today</option>
-            <option value="yesterday">Yesterday</option>
-            <option value="7d">Last 7 Days</option>
-            <option value="30d">Last 30 Days</option>
-          </select>
-        </div>
+
+        <select
+          value={range}
+          onChange={(e) => setRange(e.target.value)}
+          className="cursor-pointer bg-surface-muted text-text-primary text-sm rounded-lg px-3 py-2 outline-none w-full sm:w-auto"
+        >
+          <option value="today">Today</option>
+          <option value="yesterday">Yesterday</option>
+          <option value="7d">Last 7 Days</option>
+          <option value="30d">Last 30 Days</option>
+        </select>
       </div>
 
-      <div className="flex-1 min-h-0">
+      {/* Chart */}
+      <div className="h-64 sm:h-80 xl:h-96 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={filtered}
             className="outline-none border-none"
-            margin={{ top: 5, right: 10, left: 10, bottom: 0 }}
+            margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
           >
             <CartesianGrid stroke="#f1e3c6" vertical={false} />
             <XAxis dataKey="date" stroke="#6b7d74" minTickGap={20} />
             <YAxis
               stroke="#6b7d74"
-              width={60}
+              width={50}
               tickFormatter={(v) =>
                 v >= 1000 ? `${(v / 1000).toFixed(v % 1000 === 0 ? 0 : 1)}k` : v
               }

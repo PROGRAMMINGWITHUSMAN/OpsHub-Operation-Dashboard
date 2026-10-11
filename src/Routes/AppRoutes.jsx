@@ -15,6 +15,7 @@ import Login from "../Pages/Auth/Login";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
 
 import ProtectedRoute from "../Components/Auth/ProtectedRoute";
+import UserDetails from "../Pages/Auth/UserDetails";
 
 const AppRoutes = () => {
   return (
@@ -25,6 +26,7 @@ const AppRoutes = () => {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="forgotpassword" element={<ForgotPassword />} />
+          <Route path="userdetails" element={<UserDetails />} />
         </Route>
 
         <Route element={<ProtectedRoute />}>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaFilter } from "react-icons/fa";
 import { FaSort } from "react-icons/fa";
@@ -8,6 +9,25 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import usePagination from "../../../Hooks/usePagination";
 import highlightText from "../../../Utils/highlightText";
 
+const statusStyles = {
+  active: "bg-success/10 text-success border-success/20",
+  inactive: "bg-danger/10 text-danger border-danger/20",
+};
+
+const highlightClass =
+  "bg-accent/20 text-text-primary font-semibold rounded px-0.5";
+
+const Highlighted = ({ data, fallback }) =>
+  data.match ? (
+    <>
+      {data.before}
+      <span className={highlightClass}>{data.match}</span>
+      {data.after}
+    </>
+  ) : (
+    fallback
+  );
+
 const Table = ({
   users,
   isUsersPending,
@@ -15,17 +35,11 @@ const Table = ({
   usersError,
   setFilteredUsers,
 }) => {
-  const statusStyles = {
-    active: "bg-success/10 text-success border-success/20",
-    inactive: "bg-danger/10 text-danger border-danger/20",
-  };
-
   const [input, setInput] = useState("");
   const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState("none");
 
   // Filter
-
   const filteredUsers = users.filter((elem) => {
     const search = input.toLowerCase();
 
@@ -41,24 +55,11 @@ const Table = ({
   });
 
   // Sort
-
   const sortUsers = [...filteredUsers].sort((a, b) => {
-    if (sort === "name-asc") {
-      return a.fullName.localeCompare(b.fullName);
-    }
-
-    if (sort === "name-desc") {
-      return b.fullName.localeCompare(a.fullName);
-    }
-
-    if (sort === "email-asc") {
-      return a.email.localeCompare(b.email);
-    }
-
-    if (sort === "email-desc") {
-      return b.email.localeCompare(a.email);
-    }
-
+    if (sort === "name-asc") return a.fullName.localeCompare(b.fullName);
+    if (sort === "name-desc") return b.fullName.localeCompare(a.fullName);
+    if (sort === "email-asc") return a.email.localeCompare(b.email);
+    if (sort === "email-desc") return b.email.localeCompare(a.email);
     return 0;
   });
 
@@ -74,16 +75,6 @@ const Table = ({
     itemsPerPage: usersPerPage,
   } = usePagination(sortUsers, 10);
 
-  // Highlight all displayed fields
-  const highlightedUser = currentPageUsers.map((user) => {
-    return {
-      name: highlightText(user.fullName, input),
-      username: highlightText(user.username, input),
-      email: highlightText(user.email, input),
-      phone: highlightText(user.phone, input),
-    };
-  });
-
   // Clear
   const clearFilters = () => {
     setFilter("all");
@@ -94,19 +85,26 @@ const Table = ({
 
   useEffect(() => {
     setFilteredUsers(filteredUsers.length);
-  }, [setFilteredUsers, input, filter, users]);
+  }, [setFilteredUsers, filteredUsers.length]);
+
+  const controlClass =
+    "w-full cursor-pointer bg-surface border border-surface-muted text-sm text-text-primary rounded-xl pl-10 pr-4 py-3 outline-none hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10 transition";
+  const iconLeft =
+    "absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none";
 
   return (
-    <div className="flex flex-col rounded-2xl px-5 py-3 bg-surface gap-4">
-      <p className="text-text-muted text-2xl font-medium">All Users</p>
+    <div className="flex flex-col rounded-2xl px-4 sm:px-5 py-4 bg-surface gap-4">
+      <p className="text-text-muted text-xl sm:text-2xl font-medium">
+        All Users
+      </p>
 
-      {/* Controls */}
-      <div className="flex gap-3">
+      {/* Controls: mobile pe neeche neeche, bari screen pe ek row */}
+      <div className="flex flex-col lg:flex-row gap-3">
         {/* Search */}
         <div className="relative w-full">
           <FaMagnifyingGlass
             size={17}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
           />
 
           <input
@@ -117,31 +115,30 @@ const Table = ({
               setCurrentPage(1);
             }}
             placeholder="Search by name, email or username"
-            className="w-full bg-surface border border-surface-muted rounded-xl py-3 pl-11 pr-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+            className="w-full bg-surface border border-surface-muted rounded-xl py-3 pl-11 pr-10 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
           />
 
           <TbXboxXFilled
             size={17}
-            onClick={() => input && setInput("")}
+            onClick={() => {
+              setInput("");
+              setCurrentPage(1);
+            }}
             className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted cursor-pointer"
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex gap-3">
           {/* Filter */}
           <div className="relative">
-            <FaFilter
-              size={14}
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
-            />
-
+            <FaFilter size={14} className={iconLeft} />
             <select
               value={filter}
               onChange={(e) => {
                 setFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="cursor-pointer bg-surface border border-surface-muted text-sm text-text-primary rounded-xl pl-10 pr-4 py-3 outline-none hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+              className={controlClass}
             >
               <option value="all">All</option>
               <option value="active">Active</option>
@@ -151,18 +148,14 @@ const Table = ({
 
           {/* Sort */}
           <div className="relative">
-            <FaSort
-              size={14}
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
-            />
-
+            <FaSort size={14} className={iconLeft} />
             <select
               value={sort}
               onChange={(e) => {
                 setSort(e.target.value);
                 setCurrentPage(1);
               }}
-              className="cursor-pointer bg-surface border border-surface-muted text-sm text-text-primary rounded-xl pl-10 pr-4 py-3 outline-none hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+              className={controlClass}
             >
               <option value="none">None</option>
               <option value="name-asc">Name ↑</option>
@@ -173,41 +166,36 @@ const Table = ({
           </div>
 
           {/* Clear */}
-          <div className="relative">
-            <button
+          <div className="relative col-span-2 sm:col-span-1">
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.95 }}
               onClick={clearFilters}
-              className="cursor-pointer bg-surface border border-surface-muted text-sm text-text-primary rounded-xl pl-10 pr-4 py-3 outline-none hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+              className={`${controlClass} text-left`}
             >
               Clear
-              <TbXboxXFilled
-                size={14}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
-              />
-            </button>
+            </motion.button>
+            <TbXboxXFilled size={14} className={iconLeft} />
           </div>
         </div>
       </div>
 
-      {/* Table */}
-      <div>
-        <table className="w-full text-left text-sm">
+      {/* Table: chhoti screen pe side se scroll hota hai */}
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-175 text-left text-sm">
           <thead>
             <tr className="border-b border-surface-muted text-text-muted">
               <th className="py-2 pr-4 font-medium">User ID</th>
-
               <th className="py-2 pr-4 font-medium">Name</th>
-
               <th className="py-2 pr-4 font-medium">Username</th>
-
               <th className="py-2 pr-4 font-medium">Email</th>
-
               <th className="py-2 pr-4 font-medium">Status</th>
-
               <th className="py-2 pr-4 font-medium">Phone</th>
             </tr>
           </thead>
 
-          <tbody className="">
+          {/* key badalne pe rows ki animation dobara chalti hai */}
+          <tbody key={`${currentPage}-${filter}-${sort}`}>
             {/* Loading */}
             {isUsersPending && (
               <tr>
@@ -238,137 +226,91 @@ const Table = ({
             {/* Users */}
             {!isUsersPending &&
               !isUsersError &&
-              currentPageUsers.map((elem, idx) => {
-                const name = highlightedUser[idx].name;
-                const username = highlightedUser[idx].username;
-                const email = highlightedUser[idx].email;
-                const phone = highlightedUser[idx].phone;
+              currentPageUsers.map((elem, idx) => (
+                <motion.tr
+                  key={elem.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: idx * 0.04 }}
+                  className="border-b border-surface-muted/60 hover:bg-secondary/50 transition-colors"
+                >
+                  <td className="py-3 pr-4 font-medium text-text-primary whitespace-nowrap">
+                    {elem.id}
+                  </td>
 
-                return (
-                  <tr key={elem.id}>
-                    {/* ID */}
-                    <td className="py-3 pr-4 font-medium text-text-primary">
-                      {elem.id}
-                    </td>
+                  <td className="py-3 pr-4 text-text-primary whitespace-nowrap">
+                    <Highlighted
+                      data={highlightText(elem.fullName, input)}
+                      fallback={elem.fullName}
+                    />
+                  </td>
 
-                    {/* Name */}
-                    <td className="py-3 pr-4 text-text-primary">
-                      {name.match ? (
-                        <>
-                          {name.before}
+                  <td className="py-3 pr-4 text-text-primary whitespace-nowrap">
+                    @
+                    <Highlighted
+                      data={highlightText(elem.username, input)}
+                      fallback={elem.username}
+                    />
+                  </td>
 
-                          <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
-                            {name.match}
-                          </span>
+                  <td className="py-3 pr-4 text-text-primary whitespace-nowrap">
+                    <Highlighted
+                      data={highlightText(elem.email, input)}
+                      fallback={elem.email}
+                    />
+                  </td>
 
-                          {name.after}
-                        </>
-                      ) : (
-                        elem.fullName
-                      )}
-                    </td>
+                  <td className="py-3 pr-4 text-text-primary">
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold capitalize ${statusStyles[elem.status] ?? statusStyles.inactive}`}
+                    >
+                      {elem.status}
+                    </span>
+                  </td>
 
-                    {/* Username */}
-                    <td className="py-3 pr-4 text-text-primary">
-                      @
-                      {username.match ? (
-                        <>
-                          {username.before}
-
-                          <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
-                            {username.match}
-                          </span>
-
-                          {username.after}
-                        </>
-                      ) : (
-                        elem.username
-                      )}
-                    </td>
-
-                    {/* Email */}
-                    <td className="py-3 pr-4 text-text-primary">
-                      {email.match ? (
-                        <>
-                          {email.before}
-
-                          <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
-                            {email.match}
-                          </span>
-
-                          {email.after}
-                        </>
-                      ) : (
-                        elem.email
-                      )}
-                    </td>
-
-                    {/* Status */}
-                    <td className="py-3 pr-4 text-text-primary">
-                      <span
-                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold capitalize ${statusStyles[elem.status]}`}
-                      >
-                        {elem.status}
-                      </span>
-                    </td>
-
-                    {/* Phone */}
-                    <td className="py-3 pr-4 text-text-primary">
-                      {phone.match ? (
-                        <>
-                          {phone.before}
-
-                          <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
-                            {phone.match}
-                          </span>
-
-                          {phone.after}
-                        </>
-                      ) : (
-                        elem.phone
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
+                  <td className="py-3 pr-4 text-text-primary whitespace-nowrap">
+                    <Highlighted
+                      data={highlightText(elem.phone, input)}
+                      fallback={elem.phone}
+                    />
+                  </td>
+                </motion.tr>
+              ))}
           </tbody>
-          {sortUsers.length > 0 && (
-            <tfoot>
-              <tr>
-                <td colSpan="6" className="py-8 text-center text-text-muted">
-                  <div className="flex justify-center gap-5 items-center">
-                    <button
-                      disabled={currentPage === 1}
-                      onClick={() => {
-                        previousPage();
-                      }}
-                      className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer"
-                    >
-                      <MdOutlineKeyboardArrowLeft size={20} /> Previous
-                    </button>
-                    <p className="text-text-muted text-xs">
-                      Showing {startIndex + 1}-
-                      {Math.min(startIndex + usersPerPage, sortUsers.length)} {" "}
-                      Of {` ${sortUsers.length}`}
-                    </p>
-                    {/* <p>{currentPage}</p> */}
-                    <button
-                      disabled={currentPage === totalPages}
-                      onClick={() => {
-                        nextPage();
-                      }}
-                      className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer"
-                    >
-                      Next
-                      <MdOutlineKeyboardArrowRight size={20} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
-          )}
         </table>
       </div>
+
+      {/* Pagination: table se bahar, taake mobile pe scroll ke saath na jaye */}
+      {sortUsers.length > 0 && (
+        <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 py-2">
+          <motion.button
+            disabled={currentPage === 1}
+            onClick={previousPage}
+            whileHover={currentPage === 1 ? undefined : { scale: 1.05 }}
+            whileTap={currentPage === 1 ? undefined : { scale: 0.95 }}
+            className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <MdOutlineKeyboardArrowLeft size={20} /> Previous
+          </motion.button>
+
+          <p className="text-text-muted text-xs order-last w-full text-center sm:order-none sm:w-auto">
+            Showing {startIndex + 1}-
+            {Math.min(startIndex + usersPerPage, sortUsers.length)} Of{" "}
+            {sortUsers.length}
+          </p>
+
+          <motion.button
+            disabled={currentPage === totalPages}
+            onClick={nextPage}
+            whileHover={currentPage === totalPages ? undefined : { scale: 1.05 }}
+            whileTap={currentPage === totalPages ? undefined : { scale: 0.95 }}
+            className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            Next
+            <MdOutlineKeyboardArrowRight size={20} />
+          </motion.button>
+        </div>
+      )}
     </div>
   );
 };
