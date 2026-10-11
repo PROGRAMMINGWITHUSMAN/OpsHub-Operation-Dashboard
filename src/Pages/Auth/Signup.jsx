@@ -55,8 +55,8 @@ const Signup = () => {
     }
 
     setSignup(signupData);
-    navigate("/dashboard");
     reset();
+    navigate("/dashboard");
   }
 
   useEffect(() => {
