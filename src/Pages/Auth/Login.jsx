@@ -1,13 +1,26 @@
+import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoAlertFill } from "react-icons/go";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContextProvider";
 
 const Login = () => {
+  const { getSignup, setIsLogin, setLogin } = useContext(AuthContext);
+  console.log(getSignup);
+
+  const [adminError, setAdminError] = useState("");
+
+  const navigate = useNavigate();
+
   const loginSchema = z.object({
     name: z.string().min(1, "Name Must Be At Least 1 Character").trim(),
-    password: z.string().min(8, "Password Must Be At Least 8 Characters").trim(),
+    password: z
+      .string()
+      .min(8, "Password Must Be At Least 8 Characters")
+      .trim(),
   });
 
   const {
@@ -19,11 +32,26 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-
   const onSubmit = (data) => {
-    const loginData = data
-    console.log(loginData)
+    const loginData = data;
+    console.log(loginData);
     reset();
+
+    const isAlreadyExists = getSignup.some(
+      (item) =>
+        loginData.name === item.name &&
+        loginData.password === item.password,
+    );
+
+    console.log(isAlreadyExists);
+
+    if (isAlreadyExists) {
+      setIsLogin(true);
+      setLogin(loginData);
+      navigate("/dashboard");
+      return;
+    }
+    setAdminError("Wrong Credentials!");
   };
 
   return (
@@ -55,17 +83,21 @@ const Login = () => {
             <input
               type="password"
               {...register("password")}
-              placeholder="Enter YourPassword"
+              placeholder="Enter Your Password"
               required
               className="w-full bg-surface border border-surface-muted rounded-xl py-3 px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
             />
           </label>
-          {errors.password && <p className="text-danger">{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-danger">{errors.password.message}</p>
+          )}
           <div className="text-text-primary flex justify-between">
             <Link to="/forgotpassword">Forgot Password?</Link>
-            <p className="flex items-center gap-1 text-danger">
-              <GoAlertFill size={18} /> No Admin Found!
-            </p>
+            {adminError && (
+              <p className="flex items-center gap-1 text-danger">
+                <GoAlertFill size={18} /> {adminError} Try Again!
+              </p>
+            )}
           </div>
           <button
             type="submit"

@@ -2,8 +2,14 @@ import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Context/AuthContextProvider";
 
 const Signup = () => {
+  const { setSignup, getSignup } = useContext(AuthContext);
+  const [input, setInput] = useState("");
+  const [error, setError] = useState("");
+
   const signupSchema = z.object({
     name: z.string().min(1, "Name Must Be At Least 1 Character").trim(),
     email: z
@@ -26,13 +32,31 @@ const Signup = () => {
     resolver: zodResolver(signupSchema),
   });
 
-  console.log(errors);
+  // console.log(errors);
 
   function onSubmit(data) {
     const signupData = data;
     console.log(signupData);
+
+    const isAlreadyExists = getSignup.some(
+      (item) =>
+        signupData.name === item.name &&
+        signupData.email === item.email &&
+        signupData.password === item.password,
+    );
+
+    if (isAlreadyExists) {
+      setError("Admin Already Existed");
+      return;
+    }
+
+    setSignup(signupData);
     reset();
   }
+
+  useEffect(() => {
+    setError("");
+  }, [input]);
 
   return (
     <div>
@@ -50,10 +74,14 @@ const Signup = () => {
             Name:
             <input
               {...register("name")}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
               type="text"
               placeholder="Enter Your Name"
               required
-              className="w-full bg-surface border border-surface-muted rounded-xl py-3 px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+              className="w-full bg-surface border border-surface-muted rounded-xl py-3 px-4 text-sm text-text-primary
+               placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
             ></input>
             {errors.name && (
               <p className="text-danger">{errors.name.message}</p>
@@ -66,7 +94,8 @@ const Signup = () => {
               type="text"
               placeholder="Enter Your Email"
               required
-              className="w-full bg-surface border border-surface-muted rounded-xl py-3 px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+              className="w-full bg-surface border border-surface-muted rounded-xl py-3 px-4 text-sm text-text-primary
+               placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
             ></input>
           </label>
           {errors.email && (
@@ -79,14 +108,16 @@ const Signup = () => {
               type="password"
               placeholder="Enter Your Password"
               required
-              className="w-full bg-surface border border-surface-muted rounded-xl py-3 px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
+              className="w-full bg-surface border border-surface-muted rounded-xl py-3 px-4 text-sm text-text-primary
+               placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
             ></input>
           </label>
           {errors.password && (
             <p className="text-danger">{errors.password.message}</p>
           )}
+          {error && <p className="text-danger flex justify-center">{error}</p>}
           <button
-            type="onSubmit"
+            type="submit"
             className="bg-primary/90 text-white rounded-xl px-5 py-3 outline-none flex items-center cursor-pointer gap-2 justify-center"
           >
             Sign Up

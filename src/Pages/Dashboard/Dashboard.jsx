@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "motion/react";
 import Stat from "../../Components/Main/Dashboard/Stat.jsx";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { BsFillBoxSeamFill } from "react-icons/bs";
@@ -10,6 +11,8 @@ import RecentActivity from "../../Components/Main/Dashboard/RecentActivity.jsx";
 import activity from "../../Data/activity.js";
 import TopBar from "../../Components/Main/Dashboard/TopBar.jsx";
 import useAPIData from "../../Data/useAPIData.jsx";
+import { useContext } from "react";
+import {UserContext} from "../../Context/UserContextProvider.jsx";
 
 const Dashboard = () => {
   const {
@@ -30,7 +33,7 @@ const Dashboard = () => {
     usersData,
     productsData,
     ordersData,
-  } = useAPIData(); 
+  } = useAPIData();
 
   // console.log("USERS:", users);
   // console.log("PRODUCTS:", products);
@@ -158,46 +161,75 @@ const Dashboard = () => {
   //   { label: "This Month", value: "thisMonth" },
   // ];
 
+  const container = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.08 } },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+  };
+
   return (
-    <div className="px-6 py-6 bg-secondary flex flex-col gap-6">
-      {/* Top Bar */}
-      <TopBar />
+    <motion.main variants={container} initial="hidden" animate="show">
+      <div className="px-6 py-6 bg-secondary flex flex-col gap-6">
+        {/* Top Bar */}
+        <motion.div variants={item}>
+          <TopBar />
+        </motion.div>
 
-      {/* Stats */}
-      <div className="flex justify-between flex-wrap">
-        <Stat
-          icon={<BsFillPeopleFill size={55} className="text-primary" />}
-          title="Total Users"
-          value={isUsersPending ? "Loading..." : users.length}
-        />
-        <Stat
-          icon={<BsFillBoxSeamFill size={55} className="text-primary" />}
-          title="Total Products"
-          value={isProductsPending ? "Loading..." : products.length}
-        />
-        <Stat
-          icon={<FaShoppingCart size={55} className="text-primary" />}
-          title="Total Orders"
-          value={isOrdersPending ? "Loading..." : orders.length}
-        />
-        <Stat
-          icon={<FaRegClock size={55} className="text-primary" />}
-          title="Pending Orders"
-          value={isOrdersPending ? "Loading..." : pendingOrders.length}
-        />
-      </div>
+        {/* Stats */}
+        <div className="flex flex-wrap gap-4">
+          {[
+            {
+              icon: <BsFillPeopleFill size={40} className="text-primary" />,
+              title: "Total Users",
+              value: isUsersPending ? "Loading..." : users.length,
+            },
+            {
+              icon: <BsFillBoxSeamFill size={40} className="text-primary" />,
+              title: "Total Products",
+              value: isProductsPending ? "Loading..." : products.length,
+            },
+            {
+              icon: <FaShoppingCart size={40} className="text-primary" />,
+              title: "Total Orders",
+              value: isOrdersPending ? "Loading..." : orders.length,
+            },
+            {
+              icon: <FaRegClock size={40} className="text-primary" />,
+              title: "Pending Orders",
+              value: isOrdersPending ? "Loading..." : pendingOrders.length,
+            },
+          ].map((stat) => (
+            <motion.div
+              key={stat.title}
+              variants={item}
+              whileHover={{ y: -4 }}
+              className="flex flex-1 min-w-52"
+            >
+              <Stat {...stat} />
+            </motion.div>
+          ))}
+        </div>
 
-      {/* Dashboard Chart and Recent Activity */}
-      <div className="flex w-full gap-4 justify-between">
-        <Chart dailySales={dailySales} />
-        <RecentActivity activities={activitiesSlice} />
-      </div>
+        {/* Chart and Recent Activity */}
+        <div className="flex w-full gap-4">
+          <motion.div variants={item} className="flex flex-1 min-w-0">
+            <Chart dailySales={dailySales} />
+          </motion.div>
+          <motion.div variants={item} className="flex">
+            <RecentActivity activities={activitiesSlice} />
+          </motion.div>
+        </div>
 
-      {/* Recent Orders */}
-      <div>
-        <RecentOrders orders={ordersSlice} />
+        {/* Recent Orders */}
+        <motion.div variants={item}>
+          <RecentOrders orders={ordersSlice} />
+        </motion.div>
       </div>
-    </div>
+    </motion.main>
   );
 };
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "motion/react";
 import StatOrder from "../../Components/Main/Orders/StatOrder.jsx";
 import TopOrder from "../../Components/Main/Orders/TopOrder.jsx";
 import { HiClock } from "react-icons/hi2";
@@ -18,6 +19,23 @@ import {
   FaTruckMoving,
 } from "react-icons/fa";
 
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
+const statusStyles = {
+  Pending: "bg-accent/10 text-accent border-accent/20",
+  Processing: "bg-primary/10 text-primary border-primary/20",
+  Delivered: "bg-success/10 text-success border-success/20",
+  Cancelled: "bg-danger/10 text-danger border-danger/20",
+};
+
 const Orders = () => {
   const { orders, isOrdersError, ordersError, isOrdersPending } = useAPIData();
 
@@ -30,13 +48,6 @@ const Orders = () => {
     setSort("none");
     setInput("");
     setCurrentPage(1);
-  };
-
-  const statusStyles = {
-    Pending: "bg-accent/10 text-accent border-accent/20",
-    Processing: "bg-primary/10 text-primary border-primary/20",
-    Delivered: "bg-success/10 text-success border-success/20",
-    Cancelled: "bg-danger/10 text-danger border-danger/20",
   };
 
   const pendingOrders = orders.filter((o) => o.status === "Pending");
@@ -57,34 +68,16 @@ const Orders = () => {
   });
 
   const sortedOrders = [...filteredOrders].sort((a, b) => {
-    if (sort === "name-asc") {
-      return a.customer.localeCompare(b.customer);
-    }
-    if (sort === "name-desc") {
-      return b.customer.localeCompare(a.customer);
-    }
-    if (sort === "items-asc") {
-      return a.items.localeCompare(b.items);
-    }
-    if (sort === "items-desc") {
-      return b.items.localeCompare(a.items);
-    }
-    if (sort === "amount-asc") {
-      return a.amount - b.amount;
-    }
-    if (sort === "amount-desc") {
-      return b.amount - a.amount;
-    }
-    if (sort === "date-asc") {
-      return new Date(a.date) - new Date(b.date);
-    }
-    if (sort === "date-desc") {
-      return new Date(b.date) - new Date(a.date);
-    }
+    if (sort === "name-asc") return a.customer.localeCompare(b.customer);
+    if (sort === "name-desc") return b.customer.localeCompare(a.customer);
+    if (sort === "items-asc") return a.items.localeCompare(b.items);
+    if (sort === "items-desc") return b.items.localeCompare(a.items);
+    if (sort === "amount-asc") return a.amount - b.amount;
+    if (sort === "amount-desc") return b.amount - a.amount;
+    if (sort === "date-asc") return new Date(a.date) - new Date(b.date);
+    if (sort === "date-desc") return new Date(b.date) - new Date(a.date);
     return 0;
   });
-
-  // let isOrdersPending = true
 
   const {
     currentPage,
@@ -97,45 +90,64 @@ const Orders = () => {
     setCurrentPage,
   } = usePagination(sortedOrders, 10);
 
-  return (
-    <div className="p-6 bg-secondary flex flex-col gap-5">
-      {/* Top Bar  */}
-      <TopOrder />
+  const stats = [
+    {
+      icon: <FaClipboardList size={40} className="text-primary" />,
+      title: "Total Orders",
+      value: isOrdersPending ? "Loading..." : orders.length,
+    },
+    {
+      icon: <HiClock size={40} className="text-primary" />,
+      title: "Pending",
+      value: isOrdersPending ? "Loading..." : pendingOrders.length,
+    },
+    {
+      icon: <FaTruckMoving size={40} className="text-primary" />,
+      title: "Delivered",
+      value: isOrdersPending ? "Loading..." : deliveredOrders.length,
+    },
+    {
+      icon: <FaBan size={40} className="text-primary" />,
+      title: "Cancelled",
+      value: isOrdersPending ? "Loading..." : cancelledOrders.length,
+    },
+    {
+      icon: <FaSpinner size={40} className="text-primary" />,
+      title: "Processing",
+      value: isOrdersPending ? "Loading..." : processingOrders.length,
+    },
+  ];
 
-      {/* Stats  */}
+  return (
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="p-6 bg-secondary flex flex-col gap-5"
+    >
+      {/* Top Bar */}
+      <motion.div variants={item}>
+        <TopOrder />
+      </motion.div>
+
+      {/* Stats */}
       <div className="flex gap-4 flex-wrap justify-center">
-        <StatOrder
-          icon={<FaClipboardList size={40} className="text-primary" />}
-          title="Total Orders"
-          value={isOrdersPending ? "Loading..." : orders.length}
-        />
-        <StatOrder
-          icon={<HiClock size={40} className="text-primary" />}
-          title="Pending"
-          value={isOrdersPending ? "Loading..." : pendingOrders.length}
-        />
-        <StatOrder
-          icon={<FaTruckMoving size={40} className="text-primary" />}
-          title="Delivered"
-          value={isOrdersPending ? "Loading..." : deliveredOrders.length}
-        />
-        <StatOrder
-          icon={<FaBan size={40} className="text-primary" />}
-          title="Cancelled"
-          value={isOrdersPending ? "Loading..." : cancelledOrders.length}
-        />
-        <StatOrder
-          icon={<FaSpinner size={40} className="text-primary" />}
-          title="Processing"
-          value={isOrdersPending ? "Loading..." : processingOrders.length}
-        />
+        {stats.map((stat) => (
+          <motion.div key={stat.title} variants={item} whileHover={{ y: -4 }}>
+            <StatOrder {...stat} />
+          </motion.div>
+        ))}
       </div>
 
-      {/* Orders Table  */}
-      <div className="flex flex-col gap-4 bg-surface rounded-2xl p-4">
+      {/* Orders Table */}
+      <motion.div
+        variants={item}
+        className="flex flex-col gap-4 bg-surface rounded-2xl p-4"
+      >
         <p className="text-text-muted text-2xl font-medium">All Orders</p>
+
         <div className="flex gap-3">
-          {/* Search  */}
+          {/* Search */}
           <div className="relative w-full">
             <FaMagnifyingGlass
               size={17}
@@ -149,7 +161,7 @@ const Orders = () => {
                 setInput(e.target.value);
                 setCurrentPage(1);
               }}
-              placeholder="Search by name, email or username"
+              placeholder="Search by customer or items"
               className="w-full bg-surface border border-surface-muted rounded-xl py-3 pl-11 pr-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
             />
 
@@ -164,7 +176,7 @@ const Orders = () => {
           </div>
 
           <div className="flex gap-4">
-            {/* Filter  */}
+            {/* Filter */}
             <div className="relative">
               <FaFilter
                 size={14}
@@ -187,7 +199,7 @@ const Orders = () => {
               </select>
             </div>
 
-            {/* Sort  */}
+            {/* Sort */}
             <div className="relative">
               <FaSort
                 size={14}
@@ -214,9 +226,11 @@ const Orders = () => {
               </select>
             </div>
 
-            {/* Clear  */}
+            {/* Clear */}
             <div className="relative">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={clearFilters}
                 className="cursor-pointer bg-surface border border-surface-muted text-sm text-text-primary rounded-xl pl-10 pr-4 py-3 outline-none hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10 transition"
               >
@@ -225,21 +239,16 @@ const Orders = () => {
                   size={14}
                   className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
                 />
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>
 
         {/* Table */}
-        {isOrdersError && <p>Failed to load orders: {ordersError?.message}</p>}
         {isOrdersPending ? (
-          <div className="flex justify-center items-center w-full">
-            <div className="animate-pulse flex space-x-4 w-full">
-              <div className="flex-1 space-y-6 py-1 w-full">
-                <div className="bg-gray-200 rounded w-full flex justify-center py-5 px-5 items-center">
-                  Loading...
-                </div>
-              </div>
+          <div className="animate-pulse w-full">
+            <div className="bg-surface-muted text-text-muted rounded-xl w-full flex justify-center py-5 px-5 items-center">
+              Loading...
             </div>
           </div>
         ) : isOrdersError ? (
@@ -259,7 +268,8 @@ const Orders = () => {
               </tr>
             </thead>
 
-            <tbody>
+            {/* key badalne pe rows ki animation dobara chalti hai */}
+            <tbody key={`${currentPage}-${filter}-${sort}`}>
               {currentPageOrders.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-text-muted">
@@ -267,70 +277,92 @@ const Orders = () => {
                   </td>
                 </tr>
               ) : (
-                currentPageOrders.map((elem) => {
+                currentPageOrders.map((elem, idx) => {
                   const customer = highlightText(elem.customer, input);
                   const items = highlightText(elem.items, input);
 
                   return (
-                    <tr key={elem.uniqueId}>
+                    <motion.tr
+                      key={elem.uniqueId}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: idx * 0.04 }}
+                      className="border-b border-surface-muted/60 hover:bg-secondary/50 transition-colors"
+                    >
                       <td className="py-3 pr-4 font-medium text-text-primary">
                         <span className="flex px-3 items-center gap-1">
                           {`#ORD-${String(elem.uniqueId).padStart(3, "0")}`}
                         </span>
                       </td>
-                      <td className="py-3 pr-4 text-text-primary">
-                        {customer ? customer.before : "Unknown"}
 
+                      <td className="py-3 pr-4 text-text-primary">
                         {customer.match ? (
-                          <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
-                            {customer.match}
-                          </span>
-                        ) : null}
-
-                        {customer.after}
+                          <>
+                            {customer.before}
+                            <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
+                              {customer.match}
+                            </span>
+                            {customer.after}
+                          </>
+                        ) : (
+                          elem.customer || "Unknown"
+                        )}
                       </td>
+
                       <td className="py-3 pr-4 text-text-primary">
-                        {items ? items.before : "N/A"}
                         {items.match ? (
-                          <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
-                            {items.match}
-                          </span>
-                        ) : null}
-
-                        {items.after}
+                          <>
+                            {items.before}
+                            <span className="bg-accent/20 text-text-primary font-semibold rounded px-0.5">
+                              {items.match}
+                            </span>
+                            {items.after}
+                          </>
+                        ) : (
+                          elem.items || "N/A"
+                        )}
                       </td>
+
                       <td className="py-3 pr-4 text-text-primary">
                         ${elem.amount}
                       </td>
+
                       <td className="py-3 pr-4 text-text-primary text-start">
                         <span
-                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold capitalize ${statusStyles[elem.status]}`}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold capitalize ${statusStyles[elem.status] ?? statusStyles.Processing}`}
                         >
                           {elem.status}
                         </span>
                       </td>
+
                       <td className="py-3 pr-4 text-text-primary">
                         {elem.date}
                       </td>
-                    </tr>
+                    </motion.tr>
                   );
                 })
               )}
             </tbody>
+
             {sortedOrders.length > 0 && (
               <tfoot>
                 <tr>
                   <td colSpan="6" className="py-8 text-center text-text-muted">
                     <div className="flex justify-center gap-5 items-center">
-                      <button
+                      <motion.button
                         disabled={currentPage === 1}
-                        onClick={() => {
-                          previousPage();
-                        }}
-                        className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer"
+                        onClick={previousPage}
+                        whileHover={
+                          currentPage === 1 ? undefined : { scale: 1.05 }
+                        }
+                        whileTap={
+                          currentPage === 1 ? undefined : { scale: 0.95 }
+                        }
+                        className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         <MdOutlineKeyboardArrowLeft size={20} /> Previous
-                      </button>
+                      </motion.button>
+
                       <p className="text-text-muted text-xs">
                         Showing {startIndex + 1}-
                         {Math.min(
@@ -339,16 +371,25 @@ const Orders = () => {
                         )}{" "}
                         Of {` ${sortedOrders.length}`}
                       </p>
-                      <button
+
+                      <motion.button
                         disabled={currentPage === totalPages}
-                        onClick={() => {
-                          nextPage();
-                        }}
-                        className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer"
+                        onClick={nextPage}
+                        whileHover={
+                          currentPage === totalPages
+                            ? undefined
+                            : { scale: 1.05 }
+                        }
+                        whileTap={
+                          currentPage === totalPages
+                            ? undefined
+                            : { scale: 0.95 }
+                        }
+                        className="bg-surface-muted text-text-primary rounded-xl px-3 py-3 outline-none flex items-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         Next
                         <MdOutlineKeyboardArrowRight size={20} />
-                      </button>
+                      </motion.button>
                     </div>
                   </td>
                 </tr>
@@ -356,8 +397,8 @@ const Orders = () => {
             )}
           </table>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

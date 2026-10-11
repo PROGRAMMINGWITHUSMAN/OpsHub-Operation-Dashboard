@@ -14,6 +14,8 @@ import Signup from "../Pages/Auth/Signup";
 import Login from "../Pages/Auth/Login";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
 
+import ProtectedRoute from "../Components/Auth/ProtectedRoute";
+
 const AppRoutes = () => {
   return (
     <div>
@@ -25,13 +27,15 @@ const AppRoutes = () => {
           <Route path="forgotpassword" element={<ForgotPassword />} />
         </Route>
 
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="users" element={<Users />} />
-          <Route path="products" element={<Products />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="activity" element={<Activity />} />
-          <Route path="settings" element={<Settings />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="users" element={<Users />} />
+            <Route path="products" element={<Products />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="activity" element={<Activity />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

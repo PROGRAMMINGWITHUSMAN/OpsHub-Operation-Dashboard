@@ -4,10 +4,16 @@ import { FaRegBell } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import { FiSun, FiMoon } from "react-icons/fi";
 import { FaGear } from "react-icons/fa6";
-import { ToastContainer, toast } from "react-toastify";
-// import  Bounce  from "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import { useContext } from "react";
+import { AuthContext } from "../../../Context/AuthContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const { getSignup, login, isLogin } = useContext(AuthContext);
+
+  // console.log(login);
+
   const [isDark, setIsDark] = React.useState(false);
   const notfiy = () => {
     toast.success(
@@ -66,7 +72,7 @@ const Header = () => {
             alt="Usman Ghani"
           />
           <div className="flex flex-col leading-none">
-            <p className="text-sm font-medium text-primary">Usman Ghani</p>
+            <p className="text-sm font-medium text-primary">{login.name ? login.name : "Usman Ghani"}</p>
             <p className="text-xs text-primary/60">Administrator</p>
           </div>
         </div>
