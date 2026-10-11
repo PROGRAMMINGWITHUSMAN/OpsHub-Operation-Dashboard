@@ -5,10 +5,17 @@ import { GoDotFill } from "react-icons/go";
 import { FiSun, FiMoon, FiMenu } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../Context/AuthContextProvider";
+import { useSelector } from "react-redux";
+import {useDispatch} from "react-redux";
+import {setTheme} from "../../../App/Features/themeSlice";
 
 const Header = ({ onMenuClick }) => {
   const { login } = useContext(AuthContext);
-  const [isDark, setIsDark] = useState(false);
+
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme.theme);
+  const isDark = theme === "Dark";
+  console.log(isDark)
 
   const comingSoon = () =>
     toast.warn("Coming Soon!", {
@@ -83,7 +90,7 @@ const Header = ({ onMenuClick }) => {
         {/* Dark Mode Toggle */}
         <div
           onClick={() => {
-            setIsDark(!isDark);
+            dispatch(setTheme());
             notify();
           }}
           className={`relative hidden h-8 w-16 cursor-pointer items-center rounded-full p-1 transition-colors duration-300 sm:flex ${
