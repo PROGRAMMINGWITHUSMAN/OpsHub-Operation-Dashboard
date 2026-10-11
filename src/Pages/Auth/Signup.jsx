@@ -4,8 +4,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContextProvider";
+import {useNavigate} from "react-router-dom";
 
 const Signup = () => {
+
+  const navigate = useNavigate();
+
   const { setSignup, getSignup } = useContext(AuthContext);
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
@@ -51,6 +55,7 @@ const Signup = () => {
     }
 
     setSignup(signupData);
+    navigate("/dashboard");
     reset();
   }
 
